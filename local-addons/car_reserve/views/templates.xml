@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <template id="assets_backend1" name="car reserve assets" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <link rel="stylesheet" href="/car_reserve/static/src/css/style.css"/>-->
+
+<!--        </xpath>-->
+<!--    </template>-->
+    <template id="assets_backend2" name="car reserve assets2" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/car_reserve/static/src/css/popup.css"/>
+            <link rel="stylesheet" href="/car_reserve/static/src/css/ui.css"/>
+            <script src="/car_reserve/static/src/js/popup.js" type="text/javascript"/>
+
+        </xpath>
+    </template>
+
+
+</odoo>

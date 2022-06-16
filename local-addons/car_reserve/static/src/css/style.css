@@ -1,0 +1,27 @@
+.dropdown:hover>.dropdown-menu{
+    display: block;
+    color:Red;
+}
+.openerp .my_image > img {
+
+height: 300px;
+
+width: 300px;
+
+}
+
+
+
+.img-fluid {
+  height: 70px;
+  width: 70px;
+  border-radius: 40%;
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.img-fluid:hover {
+  transform: scaleX(-1);
+}
+.o_search_panel{
+    background-color: #e9ecef;
+}
+
