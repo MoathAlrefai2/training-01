@@ -1,0 +1,245 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* car_reserve
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-27 11:56+0000\n"
+"PO-Revision-Date: 2022-04-27 11:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: car_reserve
+#: model:ir.ui.menu,name:car_reserve.car_reserve_menu6
+msgid "Available Car"
+msgstr ""
+
+#. module: car_reserve
+#: model:res.groups,name:car_reserve.car_admin
+msgid "Car Admin"
+msgstr ""
+
+#. module: car_reserve
+#: model:res.groups,name:car_reserve.group_cars
+msgid "Car Driver"
+msgstr "سائق سياره"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__img
+msgid "Car Image"
+msgstr "صورة السيارة"
+
+#. module: car_reserve
+#: model:ir.actions.act_window,name:car_reserve.car_reserve_action_cars
+#: model:ir.model,name:car_reserve.model_car_reserve
+#: model:ir.module.category,name:car_reserve.module_category_cars
+msgid "Car Reserve"
+msgstr "حجز السيارات"
+
+#. module: car_reserve
+#: model:ir.actions.act_window,name:car_reserve.car_reserve_action_cars_available
+#: model:ir.actions.act_window,name:car_reserve.car_reserve_action_cars_reserved
+#: model:ir.actions.act_window,name:car_reserve.user_reserve_action
+msgid "Car Reserve Driver"
+msgstr "سائق  السيارة"
+
+#. module: car_reserve
+#: model:ir.ui.menu,name:car_reserve.car_reserve_menu7
+#: model:ir.ui.menu,name:car_reserve.cars_reserve_menu
+msgid "Cars"
+msgstr "سيارات"
+
+#. module: car_reserve
+#: model:ir.module.category,description:car_reserve.module_category_cars
+msgid "Category For Reserve Car"
+msgstr ""
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__color
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_driver_view_search
+msgid "Color"
+msgstr "اللون"
+
+#. module: car_reserve
+#: model:ir.ui.menu,name:car_reserve.car_reserve_menu8
+msgid "Configuration"
+msgstr "إعدادات"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__create_date
+msgid "Created on"
+msgstr "انشأ من قبل"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_driver_view_kanban
+msgid "Delete"
+msgstr "حذف"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__description
+msgid "Description"
+msgstr "وصف"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__display_name
+#: model:ir.model.fields,field_description:car_reserve.field_res_users__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: car_reserve
+#: model:ir.model.fields.selection,name:car_reserve.selection__car_reserve__state__expired
+msgid "EXPIRED"
+msgstr "منتهية الصلاحية"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_driver_view_kanban
+msgid "Edit"
+msgstr "تعديل"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_driver_view_search
+msgid "Group By Color"
+msgstr "تجميع حسب اللون"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_driver_view_search
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_view_search
+msgid "Group By Maker"
+msgstr "تجميع حسب Maker"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_view_search
+msgid "Group By Reserved"
+msgstr "تجميع حسب المحجوز"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__history
+msgid "History"
+msgstr "تاريخ"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__id
+#: model:ir.model.fields,field_description:car_reserve.field_res_users__id
+msgid "ID"
+msgstr "المُعرف"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve____last_update
+#: model:ir.model.fields,field_description:car_reserve.field_res_users____last_update
+msgid "Last Modified on"
+msgstr "آخر تعديل في"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__maker
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_driver_view_search
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_view_search
+msgid "Maker"
+msgstr "صانع"
+
+#. module: car_reserve
+#: model:ir.ui.menu,name:car_reserve.car_reserve_menu5
+msgid "My Car"
+msgstr "سيارتي"
+
+#. module: car_reserve
+#: model:ir.model.fields.selection,name:car_reserve.selection__car_reserve__state__new
+msgid "NEW"
+msgstr "الجديد"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__name
+msgid "Name"
+msgstr "اسم"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_res_users__num_of_day
+msgid "Num Of Day"
+msgstr "عدد اليوم"
+
+#. module: car_reserve
+#: model:ir.model.fields.selection,name:car_reserve.selection__car_reserve__state__old
+msgid "OLD"
+msgstr "قديم"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__price
+msgid "Price for reserve"
+msgstr "السعر المحجوز"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.cars_view_form
+msgid "Reserve Car"
+msgstr "حجز سيارة"
+
+#. module: car_reserve
+#: model:ir.ui.menu,name:car_reserve.car_base_menu
+msgid "Reserve Cars"
+msgstr "حجز سيارة"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__reserved
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_view_search
+msgid "Reserved"
+msgstr "حجز "
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_res_users__reserved_from
+msgid "Reserved From"
+msgstr "محجوز من"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_res_users__reserved_to
+msgid "Reserved To"
+msgstr "محفوظة لـ"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__state
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__state2
+msgid "State"
+msgstr "حالة"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.cars_view_form
+msgid "UnReserve Car"
+msgstr "سيارة غير محجوزة"
+
+#. module: car_reserve
+#: model_terms:ir.ui.view,arch_db:car_reserve.car_view_search
+msgid "UnReserved"
+msgstr " غير محجوزة"
+
+#. module: car_reserve
+#: model:ir.model,name:car_reserve.model_res_users
+msgid "Users"
+msgstr "المستخدمون"
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_car_reserve__reserved_id
+msgid "reserved id"
+msgstr ""
+
+#. module: car_reserve
+#: model:ir.model.fields,field_description:car_reserve.field_res_users__reserved_list
+msgid "reserved list"
+msgstr ""

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='car_type_action_cars' model='ir.actions.act_window'>
+        <field name="name">Car type</field>
+        <field name="res_model">car.type</field>
+        <field name="view_mode">tree,form</field>
+
+
+    </record>
+<!--    <menuitem name="Car Type" id="cars_type_menu6" parent="car_reserve_menu8" sequence="20" action="car_type_action_cars"/>-->
+
+    <record id="cars_type_view_form" model="ir.ui.view">
+        <field name="name">Cars Type</field>
+        <field name="model">car.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+
+                        <h1 style="color:#2C8397;">
+                            <field name="name" placeholder="Nmae Of Type"/>
+                        </h1>
+                    </div>
+                    <group>
+
+                        <group string="Number of passenger-Doors">
+                            <field name="num_of_passengers"/>
+                            <field name="num_of_doors"/>
+
+                        </group>
+
+                        <group string="Number of Bags">
+                            <field name="num_of_large_bags"/>
+                            <field name="num_of_small_bags"/>
+
+                        </group>
+                        <group>
+                            <field name="img" widget='image' class="my_image"/>
+                        </group>
+
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="car_type_view_tree" model="ir.ui.view">
+        <field name="name">Car type List</field>
+        <field name="model">car.type</field>
+
+        <field name="arch" type="xml">
+
+
+            <tree>
+                <field name="img" widget="image"/>
+                <field name="name"/>
+                <field name="num_of_passengers"/>
+                <field name="num_of_large_bags"/>
+                <field name="num_of_small_bags"/>
+                <field name="num_of_doors" />
+
+
+            </tree>
+        </field>
+    </record>
+
+</odoo>

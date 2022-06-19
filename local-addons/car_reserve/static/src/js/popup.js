@@ -1,0 +1,9 @@
+
+
+
+
+function ClosePopup() {
+myWindow.close();
+       }
+
+
