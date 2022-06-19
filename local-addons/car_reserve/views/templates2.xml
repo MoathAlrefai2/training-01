@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="cars">
+        <t t-call="website.layout">
+            <div class="container">
+                <section class="padding-bottom">
+                    <header class="section-heading mb-4">
+                        <h3 class="title-section text-muted" style="text-align: center;"></h3>
+                    </header>
+
+                    <div class="row">
+                        <aside class="col-md-2">
+
+                                    <a class="btn btn-primary" t-attf-href="/available_cars/#{view_mode}" style="width:100%;margin-bottom:15px;" >All Cars
+                                    </a>
+
+
+
+
+
+                            <article class="filter-group">
+                                <h6 class="title">
+                                    <a href="#" class="dropdown-toggle" data-toggle="collapse"
+                                       data-target="#collapse_1">Car types
+                                    </a>
+                                </h6>
+                                <div class="filter-content collapse show" id="collapse_1">
+                                    <div class="inner">
+                                        <ul class="list-menu">
+                                            <t t-foreach="car_types" t-as="type">
+                                                <li>
+                                                    <a t-attf-href="/available_cars/#{view_mode}/#{'car_type'}/#{type.name}">
+                                                        <img t-attf-src="data:image/*;base64,{{type.img}}"
+                                                             style="width:100%;height:100%;"/>
+                                                        <div t-field="type.name"></div>
+                                                    </a>
+
+                                                </li>
+                                            </t>
+
+                                        </ul>
+                                    </div> <!-- inner.// -->
+                                </div>
+                            </article> <!-- filter-group  .// -->
+                            <article class="filter-group">
+                                <h6 class="title">
+                                    <a href="#" class="dropdown-toggle" data-toggle="collapse"
+                                       data-target="#collapse_2">Brands
+                                    </a>
+                                </h6>
+                                <div class="filter-content collapse show" id="collapse_2">
+                                    <div class="inner">
+                                        <t t-foreach="car_brands" t-as="brand">
+
+                                            <div class="filter-content collapse show">
+                                                <div class="inner">
+                                                    <a t-attf-href="/available_cars/#{view_mode}/#{'brand'}/#{list(brand.values())[0]}">
+                                                        <b t-esc="list(brand.values())[0]" class="text-muted"></b>
+                                                        <b class="badge badge-pill badge-light float-right text-muted">
+                                                            <b t-esc="list(brand.values())[1]"></b>
+                                                        </b>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </t>
+
+                                    </div> <!-- inner.// -->
+                                </div>
+                            </article> <!-- filter-group .// -->
+
+                            <article class="filter-group">
+                                <h6 class="title">
+                                    <a href="#" class="dropdown-toggle" data-toggle="collapse"
+                                       data-target="#collapse_4">Passengers
+                                    </a>
+                                </h6>
+                                <div class="filter-content collapse show" id="collapse_4">
+                                    <div class="inner">
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/available_cars/#{view_mode}/#{'passengers'}/#{'1-2'}">
+
+                                            <span class="btn btn-light">1-2</span>
+                                        </a>
+
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/available_cars/#{view_mode}/#{'passengers'}/#{'3-5'}">
+
+                                            <span class="btn btn-light">3-5</span>
+                                        </a>
+
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/available_cars/#{view_mode}/#{'passengers'}/#{'6-8'}">
+
+                                            <span class="btn btn-light">6-8</span>
+                                        </a>
+
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/available_cars/#{view_mode}/#{'passengers'}/#{'9-11'}">
+
+                                            <span class="btn btn-light">9-11</span>
+                                        </a>
+                                    </div> <!-- inner.// -->
+                                </div>
+                            </article> <!-- filter-group .// -->
+
+                        </aside>
+                        <main class="col-md-10">
+                            <header class="mb-3">
+                                <div class="form-inline">
+                                    <strong class="mr-md-auto" style="color:#267372;">
+                                        <b t-esc="cars_length"/>
+                                        Car found
+                                    </strong>
+                                    <!--                                    <select class="mr-2 form-control">-->
+                                    <!--                                        <option>Latest items</option>-->
+                                    <!--                                        <option>Trending</option>-->
+                                    <!--                                        <option>Most Popular</option>-->
+                                    <!--                                        <option>Cheapest</option>-->
+                                    <!--                                    </select>-->
+                                    <div class="btn-group">
+                                        <t t-if="view_mode=='list_view'">
+                                            <a t-attf-href="/available_cars/#{'list_view'}" class="btn btn-light active"
+                                               data-toggle="tooltip"
+                                               title="List view">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                            <a t-attf-href="/available_cars/#{'grid_view'}" class="btn btn-light "
+                                               data-toggle="tooltip" title="Grid view">
+                                                <i class="fa fa-th"></i>
+                                            </a>
+                                        </t>
+                                        <t t-if="view_mode=='grid_view'">
+                                            <a t-attf-href="/available_cars/#{'list_view'}" class="btn btn-light "
+                                               data-toggle="tooltip"
+                                               title="List view">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                            <a t-attf-href="/available_cars/#{'grid_view'}" class="btn btn-light active"
+                                               data-toggle="tooltip" title="Grid view">
+                                                <i class="fa fa-th"></i>
+                                            </a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </header><!-- sect-heading -->
+
+                            <t t-if="view_mode=='grid_view'">
+                                <div class="row d-flex align-items-stretch">
+                                    <t t-foreach="cars" t-as="car">
+                                        <t t-if="int(car_index/10)==(page-1)">
+                                            <div class="col-lg-4 s_col_no_bgcolor pt16 pb16">
+                                                <div class="card card-product-grid">
+                                                    <a t-attf-href="/car_info/#{car.id}" class="img-wrap">
+                                                        <img class="img-sm float-right"
+                                                             t-attf-src="data:image/*;base64,{{car.img}}"
+                                                             t-att-alt="car.name"
+                                                        />
+                                                    </a>
+                                                    <figcaption class="info-wrap">
+
+                                                        <b style="font-size:16px;">
+                                                            <b class="text-strong" t-field="car.maker"/>-
+                                                            <b class="text-strong" t-field="car.name"/>
+                                                            <b t-field="car.car_type"
+                                                               style="color:#267372;font-size:12px;padding-left:5px;"/>
+                                                        </b>
+
+
+                                                        <div class="rating-wrap mb-2">
+                                                            <ul class="rating-stars">
+                                                                <li style="width:80%" class="stars-active">
+                                                                    <t t-foreach="int(car.rating)" t-as="star">
+                                                                        <i class="fa fa-star"></i>
+                                                                    </t>
+
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </li>
+                                                            </ul>
+
+                                                            <b t-esc="int(car.rating)" class="label-rating"></b>
+                                                            <b>/5</b>
+                                                        </div>
+
+                                                        <p class="mb-3">
+                                                            <span class="tag">
+                                                                <i class="fa fa-user"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_passengers"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-shopping-bag"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_small_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-suitcase"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <img src="/car_reserve/static/src/img/car-door.png"
+                                                                     style="width:13px;height:13px;"></img>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.transmission == 'manual'">
+                                                                    <img src="/car_reserve/static/src/img/manual-transmission.png"
+                                                                         style="width:14px;height:14px;"></img>M
+                                                                </t>
+                                                                <t t-if="car.transmission == 'automatic'">
+                                                                    <img src="/car_reserve/static/src/img/automatic-transmission.png"
+                                                                         style="width:15px;height:15px;"></img>A
+                                                                </t>
+
+
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.air_conditioning == True">
+                                                                    <img src="/car_reserve/static/src/img/air-conditioner.png"
+                                                                         style="width:18px;height:18px;"></img>
+                                                                </t>
+
+
+                                                            </span>
+                                                        </p>
+
+                                                        <p class="mt-3">
+                                                            <t t-if="id_curent_user == 4">
+                                                                 <a href="http://localhost:8069/web/login"
+                                                               class="btn btn-outline-primary"
+                                                               style="width:100%;margin-bottom: 10px;" >
+                                                                Reserve Car
+                                                            </a>
+
+                                                            </t>
+                                                            <t t-else="">
+                                                            <a data-target="#popup_rental_car" data-toggle="modal"
+                                                               class="btn btn-outline-primary"
+                                                               style="width:100%;margin-bottom: 10px;" >
+                                                                Reserve Car
+                                                            </a>
+                                                            </t>
+
+                                                            <a href="#" class="btn btn-outline-danger"
+                                                               style="width:100%;margin-bottom: 10px;">
+                                                                <i class="fa fa-heart"></i>
+                                                                Add to Wishlist
+                                                            </a>
+
+                                                        </p>
+                                                        <div class="modal fade " id="popup_rental_car" tabindex="-1"
+                                                             role="dialog"
+                                                             aria-labelledby="exampleModalCenterTitle"
+                                                             aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                 role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3 class="modal-title"
+                                                                            id="exampleModalLongTitle"
+                                                                            style="text-align: center;margin:auto;color:#3aadaa;">
+                                                                            RESERVE
+                                                                            CAR
+                                                                        </h3>
+
+                                                                    </div>
+                                                                    <img src="/car_reserve/static/src/img/rental-car.png"
+                                                                         style="width:100px;height:100px;margin:auto;"></img>
+                                                                    <div class="modal-body">
+
+                                                                        <form t-attf-action="/reserve_car/#{car.id}"
+                                                                              method="post"
+                                                                              class="form-register"
+                                                                              enctype="multipart/form-data">
+                                                                            <input type="hidden" name="csrf_token"
+                                                                                   t-att-value="request.csrf_token()"/>
+
+                                                                            <style>
+                                                                                h5{color:#337ab7;width:10%;margin-right:auto;margin-left:auto;text-align:
+                                                                                center;}
+                                                                                input[type=date]{
+                                                                                transition: width 0.4s ease-in-out;
+                                                                                border: 1px solid lightblue;
+                                                                                color:#3aadaa;
+                                                                                margin:auto;
+                                                                                width: 80%;
+                                                                                }
+                                                                                input[type=date]:focus{
+                                                                                width: 90%;
+                                                                                }
+                                                                                button{
+                                                                                transition: width 0.4s ease-in-out;
+                                                                                border: 1px solid lightblue;
+                                                                                color:#3aadaa;
+                                                                                margin:auto;
+                                                                                width: 80%;
+                                                                                }
+
+                                                                            </style>
+
+                                                                            <h5 for="date_from">From</h5>
+                                                                            <input t-attf-id="date_from"
+                                                                                   name="date_from"
+                                                                                   class="form-control o_website_form_date"
+                                                                                   placeholder="From"
+                                                                                   type="date"/>
+
+
+                                                                            <h5 for="to_date">To</h5>
+                                                                            <input t-attf-id="date_to"
+                                                                                   name="date_to"
+                                                                                   class="form-control o_website_form_date"
+                                                                                   placeholder="To"
+                                                                                   type="date"
+                                                                                   style="margin-bottom:30px;"/>
+
+
+                                                                            <button type="submit"
+                                                                                    class="btn btn-primary form-control"
+
+                                                                                    style="width:80%;height:37px;border-radius:2px;margin-bottom:20px;margin-right:auto;margin-left:62px">
+                                                                                Reserve
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    class="btn btn-danger form-control"
+                                                                                    data-dismiss="modal"
+                                                                                    style="width:80%;height:37px;border-radius:2px;margin-bottom:10px;margin-right:auto;margin-left:62px">
+                                                                                Close
+                                                                            </button>
+
+
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="color:#F06050;text-align: right; font-size:15px;">
+                                                            <b t-field="car.price"></b>
+                                                            <i class="fa fa-money"></i>
+                                                        </div>
+
+
+                                                    </figcaption>
+                                                </div>
+                                            </div> <!-- col.// -->
+                                        </t>
+                                    </t>
+                                </div>
+                            </t>
+
+                            <t t-if="view_mode=='list_view'">
+                                <t t-foreach="cars" t-as="car">
+                                    <t t-if="int(car_index/10)==(page-1)">
+                                        <article class="card card-product-list">
+                                            <div class="row no-gutters">
+                                                <aside class="col-md-3">
+                                                    <a t-attf-href="/car_info/#{car.id}" class="img-wrap">
+                                                        <img t-attf-src="data:image/*;base64,{{car.img}}"/>
+                                                    </a>
+                                                </aside> <!-- col.// -->
+                                                <div class="col-md-6">
+                                                    <div class="info-main">
+                                                        <b style="font-size:20px;">
+                                                            <b class="text-strong" t-field="car.maker"/>-
+                                                            <b class="text-strong" t-field="car.name"/>
+                                                        </b>
+
+                                                        <h6 class="text-muted" t-field="car.car_type"/>
+                                                        <div class="rating-wrap mb-2">
+                                                            <ul class="rating-stars">
+                                                                <li style="width:80%" class="stars-active">
+                                                                    <t t-foreach="int(car.rating)" t-as="star">
+                                                                        <i class="fa fa-star"></i>
+                                                                    </t>
+
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </li>
+                                                            </ul>
+
+                                                            <b t-esc="int(car.rating)" class="label-rating"></b>
+                                                            <b>/5</b>
+                                                        </div> <!-- rating-wrap.// -->
+
+
+                                                        <p class="mb-3">
+                                                            <span class="tag">
+                                                                <i class="fa fa-user"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_passengers"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-shopping-bag"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_small_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-suitcase"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <img src="/car_reserve/static/src/img/car-door.png"
+                                                                     style="width:13px;height:13px;"></img>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.transmission == 'manual'">
+                                                                    <img src="/car_reserve/static/src/img/manual-transmission.png"
+                                                                         style="width:14px;height:14px;"></img>M
+                                                                </t>
+                                                                <t t-if="car.transmission == 'automatic'">
+                                                                    <img src="/car_reserve/static/src/img/automatic-transmission.png"
+                                                                         style="width:15px;height:15px;"></img>A
+                                                                </t>
+
+
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.air_conditioning == True">
+                                                                    <img src="/car_reserve/static/src/img/air-conditioner.png"
+                                                                         style="width:18px;height:18px;"></img>
+                                                                </t>
+
+
+                                                            </span>
+                                                        </p>
+
+                                                        <div style="color:#f8882f;font-size:13px;margin-right: 15px;margin-left: 15px;">
+                                                            <div class="row">
+                                                                <span class="col-sm"
+                                                                      style="text-align: center;border: 1px solid ;border-color:#267372; border-radius: 25px;padding: 3px;background-color:#eceae4;margin-right:10px;">
+                                                                    Fuel Police :
+                                                                    <div style="display: inline; color:#267372;"
+                                                                         t-field="car.policies_fuel"/>
+                                                                </span>
+                                                                <span class="col-sm"
+                                                                      style="text-align: center;border: 1px solid ;border-color:#267372; border-radius: 25px;padding: 3px;background-color:#eceae4;">
+                                                                    Pick Up Police :
+                                                                    <div style="display: inline; color:#267372;"
+                                                                         t-field="car.policies_pick_up"/>
+                                                                </span>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div> <!-- info-main.// -->
+                                                </div> <!-- col.// -->
+                                                <aside class="col-sm-3">
+                                                    <div class="info-aside">
+                                                        <div class="price-wrap">
+                                                            <span class="h5 price">$
+                                                                <b class="text-strong" t-field="car.price"/>
+                                                            </span>
+                                                            <small class="text-muted">/per day</small>
+                                                        </div> <!-- price-wrap.// -->
+                                                        <small class="text-success">Free Cancellation</small>
+
+                                                        <!--                                                <p class="text-muted mt-3">Basic Collision Damage Protection</p>-->
+                                                        <p class="mt-3">
+                                                            <t t-if="id_curent_user == 4">
+                                                                 <a href="http://localhost:8069/web/login"
+                                                               class="btn btn-outline-primary"
+                                                               style="width:100%;margin-bottom: 10px;" >
+                                                                Reserve Car
+                                                            </a>
+
+                                                            </t>
+                                                            <t t-else="">
+                                                            <a data-target="#popup_rental_car" data-toggle="modal"
+                                                               class="btn btn-outline-primary"
+                                                               style="width:100%;margin-bottom: 10px;" >
+                                                                Reserve Car
+                                                            </a>
+                                                            </t>
+                                                            <a href="#" class="btn btn-outline-danger"
+                                                               style="width:100%;margin-bottom: 10px;">
+                                                                <i class="fa fa-heart"></i>
+                                                                Add to Wishlist
+                                                            </a>
+                                                            <a t-attf-href="/car_info/#{car.id}"
+                                                               class="btn btn-outline-success"
+                                                               style="width:100%;margin-bottom: 10px;">
+                                                                <i class="fa fa-info"></i>
+                                                                More Detail
+                                                            </a>
+                                                        </p>
+                                                        <div class="modal fade " id="popup_rental_car" tabindex="-1"
+                                                             role="dialog"
+                                                             aria-labelledby="exampleModalCenterTitle"
+                                                             aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                 role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3 class="modal-title"
+                                                                            id="exampleModalLongTitle"
+                                                                            style="text-align: center;margin:auto;color:#3aadaa;">
+                                                                            RESERVE
+                                                                            CAR
+                                                                        </h3>
+
+                                                                    </div>
+                                                                    <img src="/car_reserve/static/src/img/rental-car.png"
+                                                                         style="width:100px;height:100px;margin:auto;"></img>
+                                                                    <div class="modal-body">
+
+                                                                        <form t-attf-action="/reserve_car/#{car.id}"
+                                                                              method="post"
+                                                                              class="form-register"
+                                                                              enctype="multipart/form-data">
+                                                                            <input type="hidden" name="csrf_token"
+                                                                                   t-att-value="request.csrf_token()"/>
+
+                                                                            <style>
+                                                                                h5{color:#337ab7;width:10%;margin-right:auto;margin-left:auto;text-align:
+                                                                                center;}
+                                                                                input[type=date]{
+                                                                                transition: width 0.4s ease-in-out;
+                                                                                border: 1px solid lightblue;
+                                                                                color:#3aadaa;
+                                                                                margin:auto;
+                                                                                width: 80%;
+                                                                                }
+                                                                                input[type=date]:focus{
+                                                                                width: 90%;
+                                                                                }
+                                                                                button{
+                                                                                transition: width 0.4s ease-in-out;
+                                                                                border: 1px solid lightblue;
+                                                                                color:#3aadaa;
+                                                                                margin:auto;
+                                                                                width: 80%;
+                                                                                }
+
+                                                                            </style>
+
+                                                                            <h5 for="date_from">From</h5>
+                                                                            <input t-attf-id="date_from"
+                                                                                   name="date_from"
+                                                                                   class="form-control o_website_form_date"
+                                                                                   placeholder="From"
+                                                                                   type="date"/>
+
+
+                                                                            <h5 for="to_date">To</h5>
+                                                                            <input t-attf-id="date_to"
+                                                                                   name="date_to"
+                                                                                   class="form-control o_website_form_date"
+                                                                                   placeholder="To"
+                                                                                   type="date"
+                                                                                   style="margin-bottom:30px;"/>
+
+
+                                                                            <button type="submit"
+                                                                                    class="btn btn-primary form-control"
+
+                                                                                    style="width:80%;height:37px;border-radius:2px;margin-bottom:20px;margin-right:auto;margin-left:62px">
+                                                                                Reserve
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    class="btn btn-danger form-control"
+                                                                                    data-dismiss="modal"
+                                                                                    style="width:80%;height:37px;border-radius:2px;margin-bottom:10px;margin-right:auto;margin-left:62px">
+                                                                                Close
+                                                                            </button>
+
+
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div> <!-- info-aside.// -->
+                                                </aside> <!-- col.// -->
+                                            </div> <!-- row.// -->
+                                        </article> <!-- card-product .// -->
+                                    </t>
+                                </t>
+                            </t>
+
+                            <nav class="mb-4" aria-label="Page navigation sample">
+                                <ul class="pagination">
+                                    <t t-foreach="range(1,num_of_page)" t-as="num">
+
+                                        <li class="page-item active" style="padding-left:5px;">
+                                            <a class="page-link" t-attf-href="/available_cars/#{view_mode}/#{num}">
+                                                <div t-esc="num"></div>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </nav>
+                        </main>
+
+
+                    </div> <!-- row.// -->
+                </section>
+
+
+            </div>
+
+        </t>
+    </template>
+    <template id="my_cars">
+
+        <t t-call="website.layout">
+            <div class="container">
+                <section class="padding-bottom">
+                    <header class="section-heading mb-4">
+                        <h3 class="title-section text-muted" style="text-align: center;">My Cars</h3>
+                    </header>
+
+                    <div class="row">
+                        <aside class="col-md-2">
+
+                            <article class="filter-group">
+                                <h6 class="title">
+                                    <a href="#" class="dropdown-toggle" data-toggle="collapse"
+                                       data-target="#collapse_1">Car types
+                                    </a>
+                                </h6>
+                                <div class="filter-content collapse show" id="collapse_1">
+                                    <div class="inner">
+                                        <ul class="list-menu">
+                                            <t t-foreach="car_types" t-as="type">
+                                                <li>
+                                                    <a t-attf-href="/my_cars/#{view_mode}/#{'car_type'}/#{type.name}">
+                                                        <img t-attf-src="data:image/*;base64,{{type.img}}"
+                                                             style="width:100%;height:100%;"/>
+                                                        <div t-field="type.name"></div>
+                                                    </a>
+
+                                                </li>
+                                            </t>
+
+                                        </ul>
+                                    </div> <!-- inner.// -->
+                                </div>
+                            </article> <!-- filter-group  .// -->
+                            <article class="filter-group">
+                                <h6 class="title">
+                                    <a href="#" class="dropdown-toggle" data-toggle="collapse"
+                                       data-target="#collapse_2">Brands
+                                    </a>
+                                </h6>
+                                <div class="filter-content collapse show" id="collapse_2">
+                                    <div class="inner">
+                                        <t t-foreach="car_brands" t-as="brand">
+
+                                            <div class="filter-content collapse show">
+                                                <div class="inner">
+                                                    <a t-attf-href="/my_cars/#{view_mode}/#{'brand'}/#{list(brand.values())[0]}">
+                                                        <b t-esc="list(brand.values())[0]" class="text-muted"></b>
+                                                        <b class="badge badge-pill badge-light float-right text-muted">
+                                                            <b t-esc="list(brand.values())[1]"></b>
+                                                        </b>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </t>
+
+                                    </div> <!-- inner.// -->
+                                </div>
+                            </article> <!-- filter-group .// -->
+
+                            <article class="filter-group">
+                                <h6 class="title">
+                                    <a href="#" class="dropdown-toggle" data-toggle="collapse"
+                                       data-target="#collapse_4">Passengers
+                                    </a>
+                                </h6>
+                                <div class="filter-content collapse show" id="collapse_4">
+                                    <div class="inner">
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/my_cars/#{view_mode}/#{'passengers'}/#{'1-2'}">
+
+                                            <span class="btn btn-light">1-2</span>
+                                        </a>
+
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/my_cars/#{view_mode}/#{'passengers'}/#{'3-5'}">
+
+                                            <span class="btn btn-light">3-5</span>
+                                        </a>
+
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/my_cars/#{view_mode}/#{'passengers'}/#{'6-8'}">
+
+                                            <span class="btn btn-light">6-8</span>
+                                        </a>
+
+                                        <a class="checkbox-btn"
+                                           t-attf-href="/my_cars/#{view_mode}/#{'passengers'}/#{'9-11'}">
+
+                                            <span class="btn btn-light">9-11</span>
+                                        </a>
+                                    </div> <!-- inner.// -->
+                                </div>
+                            </article> <!-- filter-group .// -->
+
+                        </aside>
+                        <main class="col-md-10">
+                            <header class="mb-3">
+                                <div class="form-inline">
+                                    <strong class="mr-md-auto" style="color:#267372;">
+                                        <b t-esc="cars_length"/>
+                                        Car found
+                                    </strong>
+                                    <!--                                    <select class="mr-2 form-control">-->
+                                    <!--                                        <option>Latest items</option>-->
+                                    <!--                                        <option>Trending</option>-->
+                                    <!--                                        <option>Most Popular</option>-->
+                                    <!--                                        <option>Cheapest</option>-->
+                                    <!--                                    </select>-->
+                                    <div class="btn-group">
+                                        <t t-if="view_mode=='list_view'">
+                                            <a t-attf-href="/my_cars/#{'list_view'}" class="btn btn-light active"
+                                               data-toggle="tooltip"
+                                               title="List view">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                            <a t-attf-href="/my_cars/#{'grid_view'}" class="btn btn-light "
+                                               data-toggle="tooltip" title="Grid view">
+                                                <i class="fa fa-th"></i>
+                                            </a>
+                                        </t>
+                                        <t t-if="view_mode=='grid_view'">
+                                            <a t-attf-href="/available_cars/#{'list_view'}" class="btn btn-light "
+                                               data-toggle="tooltip"
+                                               title="List view">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                            <a t-attf-href="/available_cars/#{'grid_view'}" class="btn btn-light active"
+                                               data-toggle="tooltip" title="Grid view">
+                                                <i class="fa fa-th"></i>
+                                            </a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </header><!-- sect-heading -->
+
+                            <t t-if="view_mode=='grid_view'">
+                                <div class="row d-flex align-items-stretch">
+                                    <t t-foreach="cars" t-as="car">
+                                        <t t-if="int(car_index/10)==(page-1)">
+                                            <div class="col-lg-4 s_col_no_bgcolor pt16 pb16">
+                                                <div class="card card-product-grid">
+                                                    <a t-attf-href="/car_info/#{car.id}" class="img-wrap">
+                                                        <img class="img-sm float-right"
+                                                             t-attf-src="data:image/*;base64,{{car.img}}"
+                                                             t-att-alt="car.name"
+                                                        />
+                                                    </a>
+                                                    <figcaption class="info-wrap">
+
+                                                        <b style="font-size:16px;">
+                                                            <b class="text-strong" t-field="car.maker"/>-
+                                                            <b class="text-strong" t-field="car.name"/>
+                                                            <b t-field="car.car_type"
+                                                               style="color:#267372;font-size:12px;padding-left:5px;"/>
+                                                        </b>
+
+
+                                                        <div class="rating-wrap mb-2">
+                                                            <ul class="rating-stars">
+                                                                <li style="width:80%" class="stars-active">
+                                                                    <t t-foreach="int(car.rating)" t-as="star">
+                                                                        <i class="fa fa-star"></i>
+                                                                    </t>
+
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </li>
+                                                            </ul>
+
+                                                            <b t-esc="int(car.rating)" class="label-rating"></b>
+                                                            <b>/5</b>
+                                                        </div>
+
+                                                        <p class="mb-3">
+                                                            <span class="tag">
+                                                                <i class="fa fa-user"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_passengers"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-shopping-bag"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_small_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-suitcase"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <img src="/car_reserve/static/src/img/car-door.png"
+                                                                     style="width:13px;height:13px;"></img>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.transmission == 'manual'">
+                                                                    <img src="/car_reserve/static/src/img/manual-transmission.png"
+                                                                         style="width:14px;height:14px;"></img>M
+                                                                </t>
+                                                                <t t-if="car.transmission == 'automatic'">
+                                                                    <img src="/car_reserve/static/src/img/automatic-transmission.png"
+                                                                         style="width:15px;height:15px;"></img>A
+                                                                </t>
+
+
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.air_conditioning == True">
+                                                                    <img src="/car_reserve/static/src/img/air-conditioner.png"
+                                                                         style="width:18px;height:18px;"></img>
+                                                                </t>
+
+
+                                                            </span>
+                                                        </p>
+
+                                                        <p class="mt-3">
+                                                            <a t-attf-href="/unreserve_car/#{car.id}"
+                                                               class="btn btn-outline-danger"
+                                                               style="width:100%;margin-bottom: 10px;">
+                                                                UnReserve Car
+                                                            </a>
+
+
+                                                        </p>
+                                                        <div style="color:#F06050;text-align: right; font-size:15px;">
+                                                            <b t-field="car.price"></b>
+                                                            <i class="fa fa-money"></i>
+                                                        </div>
+
+
+                                                    </figcaption>
+                                                </div>
+                                            </div> <!-- col.// -->
+                                        </t>
+                                    </t>
+                                </div>
+                            </t>
+
+                            <t t-if="view_mode=='list_view'">
+                                <t t-foreach="cars" t-as="car">
+                                    <t t-if="int(car_index/10)==(page-1)">
+                                        <article class="card card-product-list">
+                                            <div class="row no-gutters">
+                                                <aside class="col-md-3">
+                                                    <a t-attf-href="/car_info/#{car.id}" class="img-wrap">
+                                                        <img t-attf-src="data:image/*;base64,{{car.img}}"/>
+                                                    </a>
+                                                </aside> <!-- col.// -->
+                                                <div class="col-md-6">
+                                                    <div class="info-main">
+                                                        <b style="font-size:20px;">
+                                                            <b class="text-strong" t-field="car.maker"/>-
+                                                            <b class="text-strong" t-field="car.name"/>
+                                                        </b>
+
+                                                        <h6 class="text-muted" t-field="car.car_type"/>
+                                                        <div class="rating-wrap mb-2">
+                                                            <ul class="rating-stars">
+                                                                <li style="width:80%" class="stars-active">
+                                                                    <t t-foreach="int(car.rating)" t-as="star">
+                                                                        <i class="fa fa-star"></i>
+                                                                    </t>
+
+                                                                </li>
+                                                                <li>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </li>
+                                                            </ul>
+
+                                                            <b t-esc="int(car.rating)" class="label-rating"></b>
+                                                            <b>/5</b>
+                                                        </div> <!-- rating-wrap.// -->
+
+
+                                                        <p class="mb-3">
+                                                            <span class="tag">
+                                                                <i class="fa fa-user"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_passengers"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-shopping-bag"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_small_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <i class="fa fa-suitcase"></i>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <img src="/car_reserve/static/src/img/car-door.png"
+                                                                     style="width:13px;height:13px;"></img>
+                                                                <b class="text-strong"
+                                                                   t-field="car.car_type.num_of_large_bags"/>
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.transmission == 'manual'">
+                                                                    <img src="/car_reserve/static/src/img/manual-transmission.png"
+                                                                         style="width:14px;height:14px;"></img>M
+                                                                </t>
+                                                                <t t-if="car.transmission == 'automatic'">
+                                                                    <img src="/car_reserve/static/src/img/automatic-transmission.png"
+                                                                         style="width:15px;height:15px;"></img>A
+                                                                </t>
+
+
+                                                            </span>
+                                                            <span class="tag">
+                                                                <t t-if="car.air_conditioning == True">
+                                                                    <img src="/car_reserve/static/src/img/air-conditioner.png"
+                                                                         style="width:18px;height:18px;"></img>
+                                                                </t>
+
+
+                                                            </span>
+                                                        </p>
+
+                                                        <div style="color:#f8882f;font-size:13px;margin-right: 15px;margin-left: 15px;">
+                                                            <div class="row">
+                                                                <span class="col-sm"
+                                                                      style="text-align: center;border: 1px solid ;border-color:#267372; border-radius: 25px;padding: 3px;background-color:#eceae4;margin-right:10px;">
+                                                                    Fuel Police :
+                                                                    <div style="display: inline; color:#267372;"
+                                                                         t-field="car.policies_fuel"/>
+                                                                </span>
+                                                                <span class="col-sm"
+                                                                      style="text-align: center;border: 1px solid ;border-color:#267372; border-radius: 25px;padding: 3px;background-color:#eceae4;">
+                                                                    Pick Up Police :
+                                                                    <div style="display: inline; color:#267372;"
+                                                                         t-field="car.policies_pick_up"/>
+                                                                </span>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div> <!-- info-main.// -->
+                                                </div> <!-- col.// -->
+                                                <aside class="col-sm-3">
+                                                    <div class="info-aside">
+                                                        <div class="price-wrap">
+                                                            <span class="h5 price">$
+                                                                <b class="text-strong" t-field="car.price"/>
+                                                            </span>
+                                                            <small class="text-muted">/per day</small>
+                                                        </div> <!-- price-wrap.// -->
+                                                        <small class="text-success">Free Cancellation</small>
+
+                                                        <!--                                                <p class="text-muted mt-3">Basic Collision Damage Protection</p>-->
+                                                        <p class="mt-3">
+                                                            <a t-attf-href="/unreserve_car/#{car.id}"
+                                                               class="btn btn-outline-danger"
+                                                               style="width:100%;margin-bottom: 10px;">
+                                                                UnReserve Car
+                                                            </a>
+
+                                                            <a t-attf-href="/car_info/#{car.id}"
+                                                               class="btn btn-outline-success"
+                                                               style="width:100%;margin-bottom: 10px;">
+                                                                <i class="fa fa-info"></i>
+                                                                More Detail
+                                                            </a>
+                                                        </p>
+
+                                                    </div> <!-- info-aside.// -->
+                                                </aside> <!-- col.// -->
+                                            </div> <!-- row.// -->
+                                        </article> <!-- card-product .// -->
+                                    </t>
+                                </t>
+                            </t>
+
+                            <nav class="mb-4" aria-label="Page navigation sample">
+                                <ul class="pagination">
+                                    <t t-foreach="range(1,num_of_page)" t-as="num">
+
+                                        <li class="page-item active" style="padding-left:5px;">
+                                            <a class="page-link" t-attf-href="/my_cars/#{view_mode}/#{num}">
+                                                <div t-esc="num"></div>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </nav>
+                        </main>
+
+
+                    </div> <!-- row.// -->
+                </section>
+
+
+            </div>
+
+        </t>
+    </template>
+    <template id="cars_info">
+
+        <t t-call="website.layout">
+            <div class="container">
+                <section class="padding-bottom">
+                    <header class="section-heading mb-4">
+
+
+                    </header>
+
+
+                    <div class="row">
+                        <aside class="col-md-6">
+                            <div class="card">
+                                <article class="gallery-wrap">
+                                    <div class="img-big-wrap">
+                                        <div>
+                                            <a href="#">
+                                                <img class="img-sm float-right"
+                                                     t-attf-src="data:image/*;base64,{{car.img}}"
+                                                     t-att-alt="car.name"/>
+                                            </a>
+                                        </div>
+                                    </div> <!-- slider-product.// -->
+                                    <div class="thumbs-wrap">
+                                        <a href="#" class="item-thumb">
+                                            <img class="img-sm float-right" t-attf-src="data:image/*;base64,{{car.img}}"
+                                                 t-att-alt="car.name"/>
+                                        </a>
+
+                                    </div> <!-- slider-nav.// -->
+                                </article> <!-- gallery-wrap .end// -->
+                            </div> <!-- card.// -->
+                        </aside>
+                        <main class="col-md-6">
+                            <article class="product-info-aside">
+                                <div class="row">
+                                    <div class="col-sm">
+
+                                        <b style="font-size:30px;">
+                                            <b class="text-strong" t-field="car.maker"/>-
+                                            <b class="text-strong" t-field="car.name"/>
+
+                                        </b>
+                                        <h5 class="text-muted" t-field="car.car_type" style="margin-left:0"/>
+                                    </div>
+                                    <div class="col-sm">
+
+                                        <small class="label-rating text-success"
+                                               style="color:#F06050;position:absolute;bottom:0;right:0;">
+                                            <i class="fa fa-users"></i>
+                                            <t t-esc="len(car.history)"/>
+                                            rented before
+                                        </small>
+
+
+                                        <var class="price h4" style="color:#F06050;position:absolute;right:0;top:0;">
+                                            <b t-field="car.price"></b>
+                                            <i class="fa fa-money"></i>
+                                            <b class="text-muted" style="font-size:15px;">/per day</b>
+                                        </var>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="rating-wrap mb-2" style="padding-top:10px;">
+                                    <ul class="rating-stars">
+                                        <li style="width:80%" class="stars-active">
+                                            <t t-foreach="int(car.rating)" t-as="star">
+                                                <i class="fa fa-star"></i>
+                                            </t>
+
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </li>
+                                    </ul>
+
+                                    <b t-esc="int(car.rating)" class="label-rating"></b>
+                                    <b>/5</b>
+                                </div> <!-- rating-wrap.// -->
+
+                                <p class="mb-3">
+                                    <span class="tag">
+                                        <i class="fa fa-user"></i>
+                                        <b class="text-strong"
+                                           t-field="car.car_type.num_of_passengers"/>
+                                    </span>
+                                    <span class="tag">
+                                        <i class="fa fa-shopping-bag"></i>
+                                        <b class="text-strong"
+                                           t-field="car.car_type.num_of_small_bags"/>
+                                    </span>
+                                    <span class="tag">
+                                        <i class="fa fa-suitcase"></i>
+                                        <b class="text-strong"
+                                           t-field="car.car_type.num_of_large_bags"/>
+                                    </span>
+                                    <span class="tag">
+                                        <img src="/car_reserve/static/src/img/car-door.png"
+                                             style="width:13px;height:13px;"></img>
+                                        <b class="text-strong"
+                                           t-field="car.car_type.num_of_large_bags"/>
+                                    </span>
+                                    <span class="tag">
+                                        <t t-if="car.transmission == 'manual'">
+                                            <img src="/car_reserve/static/src/img/manual-transmission.png"
+                                                 style="width:14px;height:14px;"></img>M
+                                        </t>
+                                        <t t-if="car.transmission == 'automatic'">
+                                            <img src="/car_reserve/static/src/img/automatic-transmission.png"
+                                                 style="width:15px;height:15px;"></img>A
+                                        </t>
+
+
+                                    </span>
+                                    <span class="tag">
+                                        <t t-if="car.air_conditioning == True">
+                                            <img src="/car_reserve/static/src/img/air-conditioner.png"
+                                                 style="width:18px;height:18px;"></img>
+                                        </t>
+
+
+                                    </span>
+
+                                </p>
+
+                                <div style="font-size:13px;margin-right: 15px;margin-left: 15px;margin-bottom: 15px;">
+                                    <div class="row">
+                                        <span class="col-sm"
+                                              style="text-align: center;border: 1px solid ;border-color:#267372; border-radius: 25px;padding: 3px;background-color:#eceae4;margin-right:10px;">
+                                            Fuel Police :
+                                            <div style="display: inline; color:#267372;"
+                                                 t-field="car.policies_fuel"/>
+                                        </span>
+                                        <span class="col-sm"
+                                              style="text-align: center;border: 1px solid ;border-color:#267372; border-radius: 25px;padding: 3px;background-color:#eceae4;">
+                                            Pick Up Police :
+                                            <div style="display: inline; color:#267372;"
+                                                 t-field="car.policies_pick_up"/>
+                                        </span>
+
+
+                                    </div>
+                                    <div class="row" style="margin-right: 10%;margin-left: 10%;margin-top: 8px;">
+                                        <span class="col-sm"
+                                              style="text-align:center;border: 1px solid ;border-color:#267372; border-radius: 25px;padding: 3px;background-color:#eceae4;">
+                                            Miles Police :
+                                            <div style="display: inline; color:#267372;"
+                                                 t-field="car.policies_miles"/>
+                                        </span>
+                                    </div>
+
+                                </div>
+
+
+                                <dl class="row">
+
+
+                                    <dt class="col-sm-3">Made in</dt>
+                                    <dd class="col-sm-9">
+                                        <t t-set="made_date" t-value="car.made_date"/>
+                                        <div t-esc="made_date"></div>
+                                    </dd>
+
+                                    <dt class="col-sm-3">Age</dt>
+                                    <dd class="col-sm-9">
+                                        <div t-field="car.age_car"></div>
+                                    </dd>
+
+                                    <dt class="col-sm-3">Fuel Type</dt>
+                                    <dd class="col-sm-9">
+                                        <div t-field="car.fuel_type"></div>
+                                    </dd>
+
+                                    <dt class="col-sm-3">Color</dt>
+                                    <dd class="col-sm-9">
+                                        <div t-field="car.color"></div>
+                                    </dd>
+
+                                    <dt class="col-sm-3">Description</dt>
+                                    <dd class="col-sm-9">
+                                        <div t-field="car.description"></div>
+                                    </dd>
+
+
+                                </dl>
+                                <ul class="list-group" style="margin-top: 15px;margin-bottom: 15px;">
+                                    <li class="list-group-item active">What is Covered</li>
+                                    <t t-foreach="car.reserve_covered" t-as="cover">
+                                        <li class="list-group-item">
+                                            <div t-field="cover.name"></div>
+                                        </li>
+                                    </t>
+
+
+                                </ul>
+
+
+                                <div t-if="car.reserved_id==0">
+
+                                    <div>
+                                             <t t-if="id_curent_user == 4">
+                                                                 <a href="http://localhost:8069/web/login"
+                                                               class="btn btn-outline-primary"
+                                                               style="width:100%;margin-bottom: 10px;" >
+                                                                Reserve Car
+                                                            </a>
+
+                                                            </t>
+                                                            <t t-else="">
+                                                            <a data-target="#popup_rental_car" data-toggle="modal"
+                                                               class="btn btn-outline-primary"
+                                                               style="width:100%;margin-bottom: 10px;" >
+                                                                Reserve Car
+                                                            </a>
+                                                            </t>
+
+<!--                                        <a data-target="#popup_rental_car" data-toggle="modal" class="btn btn-primary"-->
+<!--                                           style="width:100%">-->
+
+
+<!--                                            <span class="text" style="color:white;">Reserve Car</span>-->
+<!--                                        </a>-->
+                                    </div>
+                                    <div class="modal  fade " id="popup_rental_car" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle"
+                                                        style="text-align: center;margin:auto;color:#3aadaa;">RESERVE
+                                                        CAR
+                                                    </h3>
+
+                                                </div>
+                                                <img src="/car_reserve/static/src/img/rental-car.png"
+                                                     style="width:100px;height:100px;margin:auto;"></img>
+                                                <div class="modal-body">
+
+                                                    <form t-attf-action="/reserve_car/#{car.id}" method="post"
+                                                          class="form-register" enctype="multipart/form-data">
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+
+                                                        <style>
+                                                            h5{color:#337ab7;width:10%;margin-right:auto;margin-left:auto;text-align:
+                                                            center;}
+                                                            input[type=date]{
+                                                            transition: width 0.4s ease-in-out;
+                                                            border: 1px solid lightblue;
+                                                            color:#3aadaa;
+                                                            margin:auto;
+                                                            width: 80%;
+                                                            }
+                                                            input[type=date]:focus{
+                                                            width: 90%;
+                                                            }
+                                                            button{
+                                                            transition: width 0.4s ease-in-out;
+                                                            border: 1px solid lightblue;
+                                                            color:#3aadaa;
+                                                            margin:auto;
+                                                            width: 80%;
+                                                            }
+
+                                                        </style>
+
+                                                        <h5 for="date_from">From</h5>
+                                                        <input t-attf-id="date_from"
+                                                               name="date_from"
+                                                               class="form-control o_website_form_date"
+                                                               placeholder="From"
+                                                               type="date"/>
+
+
+                                                        <h5 for="to_date">To</h5>
+                                                        <input t-attf-id="date_to"
+                                                               name="date_to"
+                                                               class="form-control o_website_form_date"
+                                                               placeholder="To"
+                                                               type="date" style="margin-bottom:30px;"/>
+
+
+                                                        <button type="submit" class="btn btn-primary form-control"
+
+                                                                style="width:80%;height:37px;border-radius:2px;margin-bottom:20px;margin-right:auto;margin-left:62px">
+                                                            Reserve
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger form-control"
+                                                                data-dismiss="modal"
+                                                                style="width:80%;height:37px;border-radius:2px;margin-bottom:10px;margin-right:auto;margin-left:62px">
+                                                            Close
+                                                        </button>
+
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div t-elif="car.reserved_id==id_curent_user">
+
+                                    <div>
+                                        <a t-attf-href="/unreserve_car/#{car.id}" class="btn btn-danger"
+                                           style="width:100%">
+                                            <span class="text">UnReserve Car</span>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+
+
+                            </article> <!-- product-info-aside .// -->
+                        </main> <!-- col.// -->
+                    </div>
+                </section>
+            </div>
+
+        </t>
+    </template>
+
+
+</odoo>

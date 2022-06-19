@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id='car_reserve_action_cars' model='ir.actions.act_window'>
+        <field name="name">Car Reserve</field>
+        <field name="res_model">car.reserve</field>
+        <field name="view_mode">kanban,tree,form</field>
+<!--        <field name="view_id" ref="car_driver_view_kanban"/>-->
+<!--        <field name="search_view_id" ref="car_view_search"/>-->
+    </record>
+
+    <record id='car_reserve_action_cars_available' model='ir.actions.act_window'>
+        <field name="name">Car Reserve Driver</field>
+        <field name="res_model">car.reserve</field>
+        <field name="view_mode">tree,form</field>
+<!--        <field name="view_id" ref="car_driver_view_tree"/>-->
+        <field name="domain">[('reserved', '=', False)]</field>
+<!--        <field name="search_view_id" ref="car_driver_view_search"/>-->
+        <!--        <field name="target">current</field>-->
+    </record>
+
+    <record id='car_reserve_action_cars_reserved' model='ir.actions.act_window'>
+        <field name="name">Car Reserve Driver</field>
+        <field name="res_model">car.reserve</field>
+        <field name="view_mode">tree,form</field>
+<!--        <field name="view_id" ref="car_driver_view_tree"/>-->
+        <field name="domain">[('reserved_id', '=', uid)]</field>
+<!--        <field name="search_view_id" ref="car_driver_view_search"/>-->
+    </record>
+
+    <menuitem name="Reserve Cars" id="car_base_menu"/>
+    <menuitem name="Cars" id="cars_reserve_menu" parent="car_base_menu" sequence="5"/>
+    <menuitem name="My Car" id="car_reserve_menu5" parent="cars_reserve_menu" action="car_reserve_action_cars_reserved"
+              sequence="20"/>
+    <menuitem name="Available Car" id="car_reserve_menu6" parent="cars_reserve_menu"
+              action="car_reserve_action_cars_available"
+              sequence="10"/>
+
+    <menuitem name="Configuration" id="car_reserve_menu8" parent="car_base_menu" groups='car_reserve.car_admin'
+              sequence="10"/>
+    <menuitem name="Cars" id="car_reserve_menu7" parent="car_reserve_menu8" action="car_reserve_action_cars"
+              sequence="20"/>
+
+
+    <record id="cars_view_form" model="ir.ui.view">
+        <field name="name">Cars Form</field>
+        <field name="model">car.reserve</field>
+        <field name="arch" type="xml">
+            <form edit="1">
+                <header>
+
+<!--                    <button class="btn btn-primary" name="reserve_car" string="Reserve Car" type="object"-->
+<!--                            attrs="{'invisible': ['|',('reserved', '!=', False),('state','=','expired')]}"/>-->
+
+
+<!--                    <button class="btn btn-danger" name="unreserve_car" type="object" string="UnReserve Car"-->
+<!--                            attrs="{'invisible': [('reserved', '=', False)]}"/>-->
+
+                    <field name="state" widget="statusbar" options="{'clickable':1, 'fold_field': 'fold'}"
+                           groups='car_reserve.car_admin'/>
+                    <field name="state2" widget="statusbar" options="{'clickable':0, 'fold_field': 'fold'}"
+                           groups='car_reserve.group_cars'/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="test" type="object" class="oe_stat_button" icon="fa-car">
+                            <div class="o_stat_info">
+                                <field name="maker" class="o_stat_value"/>
+
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+
+                        <h1 style="color:#2C8397;">Name
+                            <field name="name" placeholder="Nmae Of Car"/>
+                        </h1>
+                        <h2 style="color:#F06050;">Price
+                            <field name="price" placeholder="Price Of Car"/>
+                            <i class="fa fa-money" style="padding-left: 10px;"/>
+                        </h2>
+                    </div>
+
+                    <group>
+                        <group string="Genral Information">
+                            <field name="color"/>
+                            <field name="maker"/>
+                            <field name="made_date" options="{'format': 0}"/>
+                            <field name="age_car" options="{'format': 0}"/>
+                            <field name="transmission"/>
+                            <field name="img" widget='image' class="my_image"/>
+
+
+                        </group>
+                        <group string="Specific Information">
+                            <field name="description"/>
+                             <field name="fuel_type"/>
+                             <field name="air_conditioning"/>
+<!--                            Delete-->
+<!--                             <field name="rating"/>-->
+                             <field name="rating_count"/>
+<!--                            this-->
+                            <field name="rating" widget="priority"/>
+                            <field name="car_type" widget="many2one"/>
+                            <field name="reserved" widget="many2one_avatar_user" groups='car_reserve.car_admin'
+                            attrs="{'invisible': [('reserved', '=', False)]}"
+                            />
+
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Policies" groups='car_reserve.car_admin'>
+                             <group>
+
+                                <field name="reserve_covered" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="policies_fuel"/>
+                            </group>
+                            <group>
+
+                                <field name="policies_miles"/>
+                            </group>
+                            <group>
+
+                                <field name="policies_pick_up"/>
+                            </group>
+
+                        </page>
+                        <page string="History" groups='car_reserve.car_admin'>
+                            <field name="history" widget="many2many_kanban">
+                                <kanban default_group_by="reserved_from">
+                                    <field name="name"/>
+                                    <field name="reserved_to"/>
+                                    <field name="reserved_from"/>
+                                    <field name="num_of_day"/>
+                                    <field name="price"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="#{kanban_color(record.name.raw_value)} oe_kanban_global_click">
+
+                                                <div class="oe_kanban_content">
+                                                    <div class="oe_kanban_card oe_kanban_global_click">
+                                                        <div class="oe_kanban_bottom_right">
+
+                                                            <strong>
+                                                                <field name="name"/>
+                                                            </strong>
+
+                                                            <br/>
+                                                        </div>
+                                                        <div style="color:#2C8397;">
+                                                            <b>From</b>
+                                                            <field name="reserved_from"/>
+
+
+                                                        </div>
+                                                        <div style="color:#F06050;">
+                                                            <b>To</b>
+                                                            <field name="reserved_to"/>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="o_kanban_record_bottom">
+                                                        <div class="oe_kanban_bottom_left">
+
+                                                            <h6>Number Of Days (<field name="num_of_day"/>)
+                                                            </h6>
+                                                        </div>
+
+                                                        <div class="oe_kanban_bottom_right">
+                                                            <i class="fa fa-money"/>
+                                                            <field name="price"/>
+                                                            <field name="user" widget="many2one_avatar_user"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <record id="car_view_search" model="ir.ui.view">
+        <field name="name">car.view.search</field>
+        <field name="model">car.reserve</field>
+        <field name="arch" type="xml">
+
+            <search>
+                <group expand="0" string="Group By Reserved">
+                    <filter string="Reserved" name="Reserved" context="{'group_by':'reserved'}"/>
+                </group>
+                <group expand="0" string="Group By Maker">
+                    <filter string="Maker" name="Maker" context="{'group_by':'maker'}"/>
+                </group>
+                <filter string="Reserved" name="Reserved" domain="[ ('reserved', '!=', False)]"/>
+                <filter string="UnReserved" name="UnReserved" domain="[ ('reserved', '=', False)]"/>
+                <searchpanel>
+                    <field name="reserved" icon="fa fa-users" select="multi" color="Blue"/>
+
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="car_driver_view_tree" model="ir.ui.view">
+        <field name="name">Car Driver List</field>
+        <field name="model">car.reserve</field>
+
+        <field name="arch" type="xml">
+
+
+            <tree decoration-info="reserved!=False" decoration-bf="1" decoration-it="1">
+                <field name="img" widget="image"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="color"/>
+                <field name="maker"/>
+                <field name="price" decoration-danger="price>20"/>
+                <field name="reserved" widget="many2one_avatar_user" groups='car_reserve.car_admin'/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="car_driver_view_search" model="ir.ui.view">
+        <field name="name">car.driver.view.search</field>
+        <field name="model">car.reserve</field>
+        <field name="groups_id" eval="[(4, ref('car_reserve.group_cars'))]"/>
+
+        <field name="arch" type="xml">
+
+            <search>
+                <group expand="0" string="Group By Color">
+                    <filter string="Color" name="Color" context="{'group_by':'color'}"/>
+                </group>
+                <group expand="0" string="Group By Maker">
+                    <filter string="Maker" name="Maker" context="{'group_by':'maker'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+
+    <record id="car_driver_view_kanban" model="ir.ui.view">
+        <field name="name">Car Driver Kanban</field>
+        <field name="model">car.reserve</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="maker"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.maker.raw_value)} oe_kanban_global_click">
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </t>
+
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_card oe_kanban_global_click">
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="img" widget="image"/>
+
+                                        <b style="padding-left:5%; font-size:18px;color:#2C8397;">
+                                            <field name="name"/>
+                                            <i class="fa fa-car"/>
+                                        </b>
+                                        <br/>
+                                    </div>
+                                    <div>
+
+                                        <field name="color" invisible="1"/>
+                                        <!--                                        <field name="maker"/>-->
+<br/>
+                                    </div>
+                                    <div>
+                                     <field name="rating" widget="priority"/>
+                                        </div>
+
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left"
+                                             style="padding-bottom:10px;padding-top:10px;font-size:15px;">
+                                            Maker (<field name="maker"/>)
+
+                                        </div>
+
+                                        <div class="oe_kanban_bottom_right" style="font-size:15px;color:#F06050;">
+                                            <i class="fa fa-money"/>
+                                            <field name="price"/>
+                                            <field name="reserved" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="car_history_view_form" model="ir.ui.view">
+        <field name="name">Car History Form</field>
+        <field name="model">car.history</field>
+        <field name="arch" type="xml">
+            <form edit="1">
+                <sheet>
+
+                    <div class="oe_title">
+
+                        <h1 style="color:#2C8397;">Name
+                            <field name="name"/>
+                        </h1>
+                        <h2 style="color:#F06050;">Price
+                            <field name="price"/>
+                            <i class="fa fa-money" style="padding-left: 10px;"/>
+                        </h2>
+                    </div>
+
+                    <group>
+                        <group string="From">
+                            <field name="user" widget="many2one_avatar_user" groups='car_reserve.car_admin'/>
+                            <field name="reserved_from"/>
+
+
+                        </group>
+                        <group string="To">
+                            <field name="reserved_to"/>
+                            <field name="num_of_day"/>
+
+                        </group>
+                    </group>
+
+
+
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+
+</odoo>
