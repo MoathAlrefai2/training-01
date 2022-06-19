@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-utf-8# from odoo import http
+from odoo import http
 
 
 class Test(http.Controller):

@@ -4,11 +4,13 @@ from odoo import models, fields, api
 
 
 class test(models.Model):
-    _name = 'test.test'
+    _name = 'test.testa'
     _description = 'test.test'
 
     name = fields.Char()
+
     value = fields.Integer()
+
     value2 = fields.Float(compute="_value_pc", store=True)
     description = fields.Text()
 
