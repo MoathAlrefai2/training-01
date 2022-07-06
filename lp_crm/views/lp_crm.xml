@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="partner_search_inherited" model="ir.ui.view">
+		<field name="name">res_partner</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_res_partner_filter" />
+		<field name="arch" type="xml">
+			<filter name="type_person" position="before">
+				<separator />
+				<filter string="External" name="external_leads"
+					domain="[('created_externally', '=', True)]" />
+				<separator />
+			</filter>
+		</field>
+	</record>
+
+	<record id="view_crm_case_leads_filter_inherited"
+		model="ir.ui.view">
+		<field name="name">lp_crm</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
+		<field name="arch" type="xml">
+			<filter name="lost" position="after">
+				<separator />
+				<filter string="External" name="external_leads"
+					domain="[('created_externally', '=', True)]" />
+			</filter>
+		</field>
+	</record>
+
+	<template id="assets_backend" name="CRM assets backend"
+		inherit_id="web.assets_backend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" href="/lp_crm/static/src/scss/style.scss"></link>
+		</xpath>
+	</template>
+
+	<record id="lp_crm_form_quick_view" model="ir.ui.view">
+		<field name="name">lp_crm</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.quick_create_opportunity_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='partner_id']" position="replace">
+				<field name="partner_id" string="Company"
+					domain="[('is_company', '=', True)]" />
+			</xpath>
+			<xpath expr="//field[@name='partner_id']" position="after">
+				<field name="lp_department"
+					domain="[('lp_type', '=', 'department')]" required="1"
+					options="{'no_open':True,'no_create':1,'no_create_edit':1}" />
+			</xpath>
+
+		</field>
+	</record>
+	<record id="lp_crm_view_form" model="ir.ui.view">
+		<field name="name">lp_crm</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_lead_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//group/group[2]//field[@name='partner_id']"
+				position="replace">
+				<field name="partner_id" domain="[('is_company', '=', True)]"
+					widget="res_partner_many2one" string="Customer"
+					context="{'res_partner_search_mode': type == 'opportunity' and 'customer' or False,                                         'default_name': contact_name or partner_name,                                         'default_street': street,                                         'default_is_company': type == 'opportunity' and contact_name == False,                                         'default_company_name': type == 'opportunity' and partner_name,                                         'default_street2': street2,                                         'default_city': city,                                         'default_title': title,                                         'default_state_id': state_id,                                         'default_zip': zip,                                         'default_country_id': country_id,                                         'default_function': function,                                         'default_phone': phone,                                         'default_mobile': mobile,                                         'default_email': email_from,                                         'default_user_id': user_id,                                         'default_team_id': team_id,                                         'default_website': website,                                         'show_vat': True,                                     }" />
+			</xpath>
+
+			<xpath expr="//field[@name='stage_id']" position="replace">
+				<field name="stage_id" widget="statusbar"
+					options="{'clickable': '1', 'fold_field': 'fold'}"
+					domain="['|', ('team_id', '=', team_id), ('team_id', '=', False)]"
+					attrs="{'invisible': ['|', ('active', '=', False), ('type', '=', 'lead')]}"
+					on_change="1" can_create="false" can_write="false"
+					modifiers="{'invisible':['|',['active','=',false],['type','=','lead']]}"
+					id="stage_id" />
+			</xpath>
+			<xpath expr="//field[@name='team_id']" position="after">
+				<field name="lp_OneDrive_url" widget="url" />
+				<field name="lp_opportunity" />
+				<field name="lp_stage_name" invisible="1" />
+				<field name="lp_go_ahead" invisible="1" />
+				<field name="lp_industry" />
+				<field name="lp_client_size" />
+	            <field name="country_id" string="Country " options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+				
+			</xpath>
+			<xpath expr="//page[@name='lead']" position="replace">
+				<page name="details" string="Details">
+					<group>
+						<group string="Contact Information">
+							<field name="type" invisible="1" />
+							<field name="lp_company_id" string='Company '
+								widget="many2one_list" domain="[('is_company', '=', True)]"
+								options="{'no_open':True,'no_create':1,'no_create_edit':1}"
+								attrs="{'required':[('type','!=','lead')]}" />
+							<field name="lp_individual_id" string='Individual'
+								widget="many2many_tags"
+								domain="[('parent_id', 'child_of', lp_company_id),('is_company', '=', False)]"
+								options="{'no_open':True,'no_create':1,'no_create_edit':1}" />
+							<field name="contact_other_info"
+								placeholder="description..." />
+						</group>
+						<group string="Marketing">
+							<field name="campaign_id" />
+							<field name="medium_id" />
+							<field name="source_id" />
+						</group>
+						<group string="Misc" name="Misc">
+							<field name="day_open" groups="base.group_no_one" />
+							<field name="day_close" groups="base.group_no_one" />
+							<field name="referred" />
+							<field name="type" invisible="1" />
+						</group>
+
+					</group>
+				</page>
+				<page name="extra_info" string="Sales Qualifications">
+					<group colspan="8" col="4">
+						<field name="lp_budget" widget="selection" />
+						<field name="lp_budget_authority" />
+						<field name="lp_start_date" />
+						<field name="lp_department"
+							domain="[('lp_type', '=', 'department')]"
+							attrs="{'required' :[('lp_stage_name', '!=', 'Won')]}"
+							options="{'no_open':True,'no_create':1,'no_create_edit':1}" />
+						<field name="lp_end_date" />
+						<field name="lp_channel_source" string="Channel Source" />
+						<field name="lp_others" string="Other Info"
+							placeholder="add something.." />
+					</group>
+				</page>
+				<page attrs="{'invisible':[('type','!=','lead')]}"
+					name="extra_info" string="Marketing Qualifications">
+					<group colspan="8" col="4">
+						<field name="mql_score" />
+						<field name="autopilot_create_date" />
+						<field name="lifecycle_stage" />
+						<field name="persona" />
+						<field name="request_demo_msg" />
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

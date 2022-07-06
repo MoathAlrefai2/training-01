@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="access_employee" model="ir.rule">
+			<field name="name">Department/Section Head Can't Edit Employee.
+			</field>
+			<field name="model_id" ref="hr.model_hr_employee" />
+			<field name="groups"
+				eval="[(4,ref('lp_security.section_head_group')),(4,ref('lp_security.department_head_group'))]" />
+			<field name="perm_read">0</field>
+			<field name="perm_write">1</field>
+			<field name="domain_force">[('id','=',False)]
+			</field>
+		</record>
+
+		<record id="access_crm_own_pipeline" model="ir.rule">
+			<field name="name">Marketing Officer, CRM Manager own pipeline</field>
+			<field name="model_id" ref="crm.model_crm_lead" />
+			<field name="groups"
+				eval="[(4,ref('lp_security.marketing_officer')),(4,ref('lp_security.crm_manager')),(4,ref('lp_security.department_head_group'))]" />
+			<field name="perm_read">1</field>
+			<field name="perm_create">1</field>
+			<field name="perm_write">1</field>
+			<field name="domain_force">[('user_id','=',user.id)]
+			</field>
+		</record>
+
+		<record id="access_appraisal_read_all" model="ir.rule">
+			<field name="name">Read all appraisals</field>
+			<field name="model_id" ref="hr_appraisal.model_hr_appraisal" />
+			<field name="groups"
+				eval="[(4,ref('lp_security.hr_senior_officer'))]" />
+			<field name="perm_read">1</field>
+			<field name="perm_create">0</field>
+			<field name="perm_write">0</field>
+			<field name="domain_force">[(1,'=',1)]
+			</field>
+		</record>
+
+
+		<record id="access_not_private_address" model="ir.rule">
+			<field name="name">Access to Not Private Address</field>
+			<field name="model_id" ref="base.model_res_partner" />
+			<field name="groups"
+				eval="[(4,ref('lp_security.lp_group_access_not_private_contact'))]" />
+			<field name="perm_read">1</field>
+			<field name="perm_create">1</field>
+			<field name="perm_write">1</field>
+			<field name="domain_force">[('type','!=','private')]
+			</field>
+		</record>
+
+		<record id="base.res_partner_rule_private_group"
+			model="ir.rule">
+			<field name="domain_force">["|",('type','=','private'),("type","!=","private")]
+			</field>
+		</record>
+
+
+		<record id="base.res_partner_rule_private_employee"
+			model="ir.rule">
+			<field name="domain_force">[('id','=',user.partner_id.id)]
+			</field>
+		</record>
+
+		<record id="sale.sale_order_personal_rule" model="ir.rule">
+			<field name="domain_force">['|','|',('user_id','=',user.id),('user_id','=',False),('department_id.manager_id.user_id','=',user.id)]
+			</field>
+		</record>
+
+		<record id="sale.sale_order_line_personal_rule" model="ir.rule">
+			<field name="domain_force">['|','|',('salesman_id','=',user.id),('salesman_id','=',False),('order_id.department_id.manager_id.user_id','=',user.id)]
+			</field>
+		</record>
+
+		<record id="hr_timesheet.timesheet_line_rule_user"
+			model="ir.rule">
+			<field name="perm_read">1</field>
+		</record>
+
+		<record id="hr_timesheet.timesheet_line_rule_approver"
+			model="ir.rule">
+			<field name="perm_read">1</field>
+			<field name="perm_create">0</field>
+			<field name="perm_write">0</field>
+			<field name="perm_unlink">0</field>
+			<field name="domain_force">['|',('employee_id', 'child_of',
+				user.employee_id.id),'&amp;',('project_id','!=',False),('project_id.user_id','=',user.id)]
+			</field>
+		</record>
+
+
+
+		<record id="department_section_head_timesheet" model="ir.rule">
+			<field name="name">Department/Section Head Can't Delete/Write/Create
+				Other Employees' Timesheet
+			</field>
+			<field name="model_id"
+				ref="analytic.model_account_analytic_line" />
+			<field name="groups"
+				eval="[(4,ref('lp_security.department_head_group')),(4,ref('lp_security.section_head_group'))]" />
+			<field name="perm_read">0</field>
+			<field name="perm_create">1</field>
+			<field name="perm_write">1</field>
+			<field name="perm_unlink">1</field>
+			<field name="domain_force">[('user_id','=',user.id)]
+			</field>
+		</record>
+
+		<record id="project_manager_others_timesheet" model="ir.rule">
+			<field name="name">Project Manager Can Delete/Write/Create</field>
+			<field name="model_id"
+				ref="analytic.model_account_analytic_line" />
+			<field name="groups"
+				eval="[(4,ref('lp_crm.lp_group_crm_project_manager'))]" />
+			<field name="perm_read">0</field>
+			<field name="perm_create">1</field>
+			<field name="perm_write">1</field>
+			<field name="perm_unlink">1</field>
+			<field name="domain_force">[('project_id.user_id','=',user.id)]
+			</field>
+		</record>
+
+
+		<record id="project_user_task_access" model="ir.rule">
+			<field name="name">Project User Access Task</field>
+			<field name="model_id" ref="project.model_project_task" />
+			<field name="groups"
+				eval="[(4,ref('project.group_project_user'))]" />
+			<field name="perm_read">1</field>
+			<field name="perm_create">1</field>
+			<field name="perm_write">1</field>
+			<field name="domain_force">['|',('project_id.user_id','=',user.id),('project_id.lp_department.manager_id.user_id',
+				'=',user.id)]
+			</field>
+		</record>
+
+
+		<record id="dept_section_head_children_profile" model="ir.rule">
+			<field name="name">Department/Section Head Access children Full
+				Profile
+			</field>
+			<field name="model_id" ref="hr.model_hr_employee" />
+			<field name="groups"
+				eval="[(4,ref('lp_security.department_head_group')),(4,ref('lp_security.section_head_group'))]" />
+			<field name="perm_read">1</field>
+			<field name="perm_create">0</field>
+			<field name="perm_write">0</field>
+			<field name="domain_force">[('id','child_of',user.employee_id.id)]
+			</field>
+		</record>
+
+
+		<record id="project.task_visibility_rule" model="ir.rule">
+			<field name="perm_unlink">0</field>
+			<field name="perm_create">0</field>
+			<field name="perm_write">0</field>
+		</record>
+
+
+		<record id="project_manager_own_project" model="ir.rule">
+			<field name="name">Access Own Project</field>
+			<field name="model_id" ref="project.model_project_project" />
+			<field name="groups"
+				eval="[(4,ref('project.group_project_user'))]" />
+			<field eval="True" name="global" />
+			<field name="domain_force">['|',('user_id','=',user.id),('lp_department.manager_id.user_id',
+				'=',user.id)]
+			</field>
+		</record>
+
+
+		<record id="leave_payroll_officer" model="ir.rule">
+			<field name="name">Payroll read all leaves</field>
+			<field name="model_id" ref="hr_holidays.model_hr_leave" />
+			<field name="groups"
+				eval="[(4,ref('hr_payroll.group_hr_payroll_user'))]" />
+			<field eval="True" name="global" />
+			<field name="domain_force">[(1,'=',1)]</field>
+			<field name="perm_read">1</field>
+
+		</record>
+
+
+
+		<record id="project_profitability_report" model="ir.rule">
+			<field name="name">Access Own Project Profitability Report</field>
+			<field name="model_id"
+				ref="sale_timesheet.model_project_profitability_report" />
+			<field name="groups"
+				eval="[(4,ref('project.group_project_user'))]" />
+			<field eval="True" name="global" />
+			<field name="domain_force">['|',('project_id.user_id','=',user.id),('project_id.lp_department.manager_id.user_id',
+				'=',user.id)]
+			</field>
+			<field name="perm_unlink">1</field>
+			<field name="perm_create">1</field>
+			<field name="perm_write">1</field>
+		</record>
+		
+			<record id="sales_subscription_own_pipline" model="ir.rule">
+			<field name="name">Sales Manager Aceess own pipeline.
+			</field>
+			<field name="model_id" ref="sale_subscription.model_sale_subscription" />
+			<field name="groups"
+				eval="[(4,ref('lp_security.lp_group_sales_manager'))]" />
+			<field name="perm_read">1</field>
+			<field name="perm_write">1</field>
+			<field name="perm_create">1</field>
+			<field name="perm_unlink">1</field>
+			<field name="domain_force">[('user_id','=',user.id)]
+			</field>
+		</record>
+
+	</data>
+</odoo>

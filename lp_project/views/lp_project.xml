@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="sequence_self_service" model="ir.sequence">
+   <field name="name">Project Sequence</field>
+   <field name="code">project.project</field>
+   <field name="active">TRUE</field>
+   <field name="prefix"></field>
+   <field name="padding">4</field>
+   <field name="number_next">1</field>
+   <field name="number_increment">1</field>
+</record>
+
+  <record id="lp_project_list_view" model="ir.ui.view">
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project" />
+    <field name="arch" type="xml">
+      <field name="company_id" position="after">
+<field name="lp_project_code" optional="show"/>
+      </field>
+    </field>
+  </record>
+
+
+
+
+    <record id="lp_project_view_kanban" model="ir.ui.view">
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project_kanban" />
+
+    <field name="arch" type="xml">
+<xpath expr="//div[@role='menuitem']" position="after">
+                       <div role="menuitem">
+                                                <a type="open">View</a>
+                                            </div>
+</xpath>
+                <xpath expr="//a[hasclass('o_project_kanban_box')]" position="replace">
+                                      <a class="o_project_kanban_box" type="open">
+
+                                    </a>
+</xpath>
+    </field>
+    </record>
+
+
+      <record id="lp_project_invoice_view_hide" model="ir.ui.view">
+                  <field name="name">project.project.form.inherit.invoicing</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="sale_timesheet.project_project_view_form" />
+    <field name="arch" type="xml">
+        <data>
+          
+                  <xpath expr="//button[@name='%(portal.portal_share_action)d']" position="attributes">
+                           <attribute name="attrs">{'invisible':[('lp_check_user_access','=',False)]}</attribute>
+             </xpath>
+                 <xpath expr="//button[@name='attachment_tree_view']" position="attributes">
+                           <attribute name="attrs">{'invisible':[('lp_check_user_access','=',False)]}</attribute>
+             </xpath>
+        
+                         <xpath expr="//button[@name='action_view_timesheet']" position="after">
+                           <field name="lp_check_user_access" invisible="1"/>
+             </xpath>
+ <xpath expr="//page[@name='billing_employee_rate']" position="attributes">
+      <attribute name="attrs">{'invisible': ['|',('allow_billable', '=', False),('lp_check_user_access', '!=', True)]}</attribute>
+ </xpath>
+</data>
+    </field>
+  </record>
+
+  <record id="lp_project_create_view" model="ir.ui.view">
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.project_project_view_form_simplified_footer" />
+    <field name="arch" type="xml">
+      <field name="name" position="after">
+          <field name="lp_department" required="1" options="{'no_quick_create': True, 'no_create_edit' : True , 'no_open' :True}"/>
+      </field>
+
+    </field>
+  </record>
+
+
+  <record id="lp_project_view" model="ir.ui.view">
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.edit_project" />
+    <field name="arch" type="xml">
+             <xpath expr="//field[@name='allowed_internal_user_ids']" position="replace">
+         <field name="allowed_internal_user_ids" string="Project Team" widget="many2many_tags" attrs="{'invisible': [('privacy_visibility', '!=', 'followers')]}"/>
+             </xpath>
+
+      <xpath expr="//div[@name='options_active']" position="before">
+        <div name="options_active">
+          <div>
+            <label for="lp_type" class="oe_inline" string="Project Type:"/>
+            <field name="lp_type" class="oe_inline oe_input_align"/>
+          </div>
+                      <div>
+            <label for="lp_project_code" class="oe_inline" string="Project Code:"/>
+            <field name="lp_project_code" class="oe_inline oe_input_align"/>
+          </div>
+        </div>
+      </xpath>
+      <field name="partner_id" position="after">
+        <field name="lp_status" />
+          <field name="lp_category" readonly="1" />
+           <field name="lp_check_user_access" invisible="1" />
+
+      </field>
+      <field name="lp_status" position="after">
+        <field name="lp_teams_link"  widget="url" />
+      </field>
+      <field name="lp_teams_link" position="after">
+        <field name="lp_devops_link"  widget="url" />
+      </field>
+              <xpath expr="//page[@name='settings']" position="attributes">
+      <attribute name="attrs">{'invisible': [('lp_check_user_access', '!=', True)]}</attribute>
+</xpath>
+      <xpath expr="//page[@name='settings']" position="after">
+        <page name="lp_BudgetTimeline" string="Budget and Timeline" attrs="{'invisible': [('lp_check_user_access', '!=', True)]}">
+          <group>
+            <group>
+              <field name="lp_budget" />
+              <field name="date_start"/>
+              <field name="lp_date_end" />
+                        <field name="lp_proposed_button" invisible="1" />
+            </group>
+
+            <group>
+              <field name="lp_proposed_budget" />
+              <field name="lp_proposed_date_start"/>
+              <field name="lp_proposed_date_end" />
+              <button name="approve_proposed_values" class="btn btn-success" type="object" string="Approve the proposed values" attrs="{'invisible': [('lp_proposed_button','=', False)]}"/>
+            </group>
+          </group>
+        </page>
+        <page name="lp_DevOps" string="DevOps Sync Settings" attrs="{'invisible': [('lp_check_user_access', '!=', True)]}">
+          <group>
+            <field name="lp_devops_token"/>
+            <field name="lp_devops_org_url"  widget="url" />
+            <field name="lp_devops_project_name"/>
+          </group>
+        </page>
+      </xpath>
+      <field name="user_id" position="after">
+
+        <field name="lp_department" required="1" options="{'no_quick_create': True, 'no_create_edit' : True , 'no_open' :True}"/>
+
+
+      </field>
+      <field name="lp_department" position="after">
+              <field name="lp_approver" />
+      </field>
+
+      <xpath expr="//div[hasclass('oe_chatter')]" position="inside">
+        <field name="message_ids" widget="mail_thread"/>
+      </xpath>
+
+      <xpath expr="//header" position="inside">
+        <button name="devops_sync" string="DevOps Sync" type="object" class="oe_highlight oe_read_only" attrs="{'invisible': [('lp_check_user_access', '!=', True)]}"/>
+      </xpath>
+
+    </field>
+  </record>
+
+
+
+    <record id="project.open_view_project_all_config" model="ir.actions.act_window">
+     <field name="context">{'search_default_lp_non_closed': 1,'search_default_lp_category': 1}</field>
+</record>
+        <record id="project.open_view_project_all" model="ir.actions.act_window">
+     <field name="context">{'search_default_lp_non_closed': 1,'search_default_lp_category': 1}</field>
+</record>
+
+  <record id="lp_project_group_by_type" model="ir.ui.view">
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project_project_filter" />
+    <field name="arch" type="xml">
+
+
+         <xpath expr="//filter[@name='own_projects']" position="after">
+
+
+             <separator/>
+                <filter string="Delivery" name="lp_category" domain="[('lp_category', '=', 'delivery')]"/>
+           <filter string="Opportunity" name="lp_category_B" domain="[('lp_category', '=', 'opportunity')]"/>
+               <separator/>
+               <filter string="Non-Closed" name="lp_non_closed" domain="[('lp_status', '!=', 'lp_closed')]"/>
+         </xpath>
+      <search>
+        <group expand="0" string="Group By">
+          <filter string="Type" name="lp_type" context="{'group_by':'lp_type'}"/>
+          <filter string="Status" name="lp_status" context="{'group_by':'lp_status'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="lp_project_type_kanban" model="ir.ui.view">
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project_kanban" />
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('o_primary')]" position="inside">
+
+               <div>
+          <field name="lp_type" />
+                </div>
+                <div>
+                  <field name="lp_project_code" />
+                </div>
+
+
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

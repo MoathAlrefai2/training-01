@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+                <record id="test_rule_on_write_check_context_Presentation" model="base.automation">
+            <field name="name"> Check if stage name equals Presentation</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="trigger">on_write</field>
+            <field name="active" eval="True"/>
+            <field name="state">code</field>
+                 <field name="filter_pre_domain">[["stage_id.name","=",'Presentation']]</field>
+            <field name="code">
+if record.stage_id.name in ['Proposition','Dedicated Demo','Negotiation','Won'] and  record.lp_department.id == False:
+    raise UserError('Please check mandatory fields for this Opportunity!!')
+            </field>
+        </record>
+
+                <record id="test_rule_on_write_check_context_Dedicated_Demo" model="base.automation">
+            <field name="name"> Check if stage name equals Dedicated Demo</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="trigger">on_write</field>
+            <field name="active" eval="True"/>
+            <field name="state">code</field>
+                 <field name="filter_pre_domain">[["stage_id.name","=",'Dedicated Demo']]</field>
+            <field name="code">
+if record.stage_id.name in ['Proposition','Presentation','Negotiation','Won'] and  record.lp_department.id == False:
+    raise UserError('Please check mandatory fields for this Opportunity!')
+            </field>
+        </record>
+
+              <record id="test_rule_on_write_check_context_Negotiation" model="base.automation">
+            <field name="name"> Check if stage name equals Negotiation</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="trigger">on_write</field>
+            <field name="active" eval="True"/>
+            <field name="state">code</field>
+                 <field name="filter_pre_domain">[["stage_id.name","=",'Negotiation']]</field>
+            <field name="code">
+if record.stage_id.name in ['Proposition','Presentation','Dedicated Demo','Won'] and  record.lp_department.id == False:
+    raise UserError('Please check mandatory fields for this Opportunity!')
+            </field>
+        </record>
+
+        <record id="test_rule_on_write_check_cont1exttr" model="base.automation">
+            <field name="name"> Check if stage name equals</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="trigger">on_write</field>
+            <field name="active" eval="True"/>
+            <field name="state">code</field>
+            <field name="filter_pre_domain">[["stage_id.name","in",["Qualified","Prospect","Negotiation","Dedicated Demo","Proposition","Presentation"]]]</field>
+            <field name="code">
+if record.stage_id.name in ['Won'] and  record.lp_department.id == False:
+   raise UserError('Please check mandatory fields for this Opportunity!')
+
+            </field>
+        </record>
+
+
+            <record id="test_rule_on_write_check_context" model="base.automation">
+            <field name="name"> Check if stage name equals Won</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="trigger">on_write</field>
+            <field name="active" eval="True"/>
+            <field name="state">code</field>
+                 <field name="filter_pre_domain">[["stage_id.name","=",'Won']]</field>
+            <field name="code">
+if record.stage_id.name in ['Prospect','Presentation','Proposition','Dedicated Demo','Negotiation'] :
+    raise UserError('This action is not allowed in this stage!')
+            </field>
+        </record>
+                    <record id="test_rule_on_write" model="base.automation">
+            <field name="name"> Check if stage name equals Prospect</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="trigger">on_write</field>
+            <field name="active" eval="True"/>
+            <field name="state">code</field>
+                        <field name="filter_pre_domain">[["stage_id.name","=",'Prospect']]</field>
+            <field name="code">
+if record.stage_id.name in ['Won','Qualified'] and record.lp_budget == False and record.lp_budget_authority == False and record.lp_start_date == False and record.lp_end_date == False and not record.lp_department.id == True:
+    raise UserError('Please check mandatory fields for this Opportunity!')
+
+            </field>
+        </record>
+
+</odoo>

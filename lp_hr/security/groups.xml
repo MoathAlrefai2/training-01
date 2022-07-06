@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="group_hr_asset_management" model="res.groups">
+			<field name="name">HR Asset</field>
+			<field name="category_id" eval="False" />
+			<field name="implied_ids"
+				eval="[(6, 0, [ref('base.group_user')])]" />
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,11 @@
+lp_accounting --> account, account_accountant
+lp_base_import_inh --> base_import
+lp_contact --> contacts, hr
+lp_appraisal --> hr, survey, hr_appraisal
+lp_hr --> hr ,hr_contract_reports,lp_appraisal
+lp_project --> project, timesheet_grid, lp_hr
+lp_crm --> crm, sale, contacts, sale_crm, lp_hr, lp_project
+lp_timesheet --> hr_timesheet
+lp_sales --> sale, sale_crm, lp_project, lp_crm, lp_accounting, lp_hr
+lp_helpdesk --> helpdesk, helpdesk_timesheet, sale_timesheet_enterprise, portal, resource, rating
+

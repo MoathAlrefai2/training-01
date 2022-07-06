@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_create_project_wizard" model="ir.ui.view">
+            <field name="name">create.project.wizard.form</field>
+            <field name="model">create.project.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="department_id" required="1" domain="[('lp_type', '=' ,'department')]" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="allow_timesheets"/>
+                            <field name="allow_billable"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="create_project" string="Create" type="object" class="oe_highlight" />
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_create_project_wizard" model="ir.actions.act_window">
+            <field name="name">Create Project</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">create.project.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

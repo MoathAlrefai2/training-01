@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id = "assets_backend_inherit" name="sale_timesheet_enterprise_assets" inherit_id ="web.assets_backend" >
+
+    <xpath  expr = "//script[@src='/timesheet_grid/static/src/js/timesheet_grid/timesheet_timer_grid_view.js']"  position = "replace" >
+
+    </xpath>
+</template>
+
+
+
+    <record id="lp_project_task_view_lp_hr_time" model="ir.ui.view">
+<field name="name">project.task.form.timesheet</field>
+<field name="model">project.task</field>
+<field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+<field name="arch" type="xml">
+             <xpath expr="//field[@name='planned_hours']" position="replace">
+                 <field name="lp_devops_original_estimate" invisible="1"/>
+                         <field name="planned_hours" widget="timesheet_uom_no_toggle"   attrs="{'readonly': [('lp_devops_original_estimate', '!=', 0)]}" nolabel="1"/>
+            </xpath>
+
+</field>
+</record>
+
+
+
+
+  <record id="lp_project_task_view_lp_header" model="ir.ui.view">
+    <field name="name">lp.project.form.inherit.project.header</field>
+<field name="model">project.task</field>
+<field name="inherit_id" ref="timesheet_grid.project_task_view_form"/>
+<field name="arch" type="xml">
+<xpath expr="//button[@name='action_timer_start']" position="replace">
+
+                    <button class="btn-primary" name="action_timer_start" type="object" string="Start" attrs="{'invisible': ['|', ('display_timer_start_primary', '=', False), ('encode_uom_in_days', '=', True)]}" groups="hr_timesheet.group_hr_timesheet_user" invisible="1" icon="fa-clock-o"/>
+</xpath>
+  <xpath expr="//button[@class='btn-secondary']" position="replace">
+
+                    <button class="btn-secondary" name="action_timer_start" type="object" string="Start" attrs="{'invisible': ['|', ('display_timer_start_secondary', '=', False), ('encode_uom_in_days', '=', True)]}" groups="hr_timesheet.group_hr_timesheet_user" invisible="1" icon="fa-clock-o"/>
+</xpath>
+
+
+</field>
+  </record>
+
+
+
+
+
+
+
+
+
+
+<record id="lp_project_task_view_lp" model="ir.ui.view">
+<field name="name">project.task.tree.search</field>
+<field name="model">project.task</field>
+<field name="inherit_id" ref="project.view_task_search_form"/>
+<field name="arch" type="xml">
+             <xpath expr="//field[@name='name']" position="after">
+                          <field name="lp_devops_ref_id"/>
+            </xpath>
+               <xpath expr="//filter[@name='user']" position="after">
+                          <filter string="State" name="lp_task_state" context="{'group_by': 'lp_task_state'}"/>
+            </xpath>
+</field>
+</record>
+  <record id="lp_project_task_view_improvements" model="ir.ui.view">
+    <field name="model">project.task</field>
+    <field name="inherit_id" ref="project.view_task_form2" />
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='extra_info']" position="after">
+        <page name="lp_DevOps" string="DevOps Info">
+          <group>
+            <group string="General">
+              <field name="lp_devops_ref_id" string="Reference Id"/>
+                <field name="lp_devops_priority"/>
+              <field name="lp_devops_project_name"/>
+              <field name="lp_devops_changed_date"/>
+              <field name="lp_devops_area"/>
+              <field name="lp_devops_iteration"/>
+            <field name="lp_task_state" string="State"  />
+             <field name="date_last_stage_update" string="State changed date" />
+            </group>
+            <group string="Parents">
+              <field name="lp_devops_epic"/>
+              <field name="lp_devops_feature"/>
+              <field name="lp_devops_requirement"/>
+
+            </group>
+            <group string="Effort Hours">
+              <field name="lp_devops_original_estimate"/>
+              <field name="lp_devops_remaining_work"/>
+              <field name="lp_devops_completed_work"/>
+            </group>
+            <group string="Schedule">
+
+              <field name="lp_devops_start_date"/>
+              <field name="lp_devops_finish_date"/>
+
+            </group>
+          </group>
+        </page>
+     </xpath>
+    </field>
+  </record>
+
+</odoo>

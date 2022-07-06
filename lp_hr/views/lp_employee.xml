@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+                    <record model="ir.ui.view" id="hr_employee_history_form_view">
+            <field name="name">hr.employeehistory.view</field>
+            <field name="model">hr.employee</field>
+             <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                   <xpath expr="//field[@name='work_location']" position="after">
+                        <field name="lp_next_appraisal_date"/>
+                                 <field name ="lp_is_probation_completed" widget='checkbox'/>
+                   </xpath>
+
+                 <xpath expr="//page[@name='hr_settings']" position="after">
+                              <page name="employee_history" string="Employee History">
+                            <field name="lp_employee_history" context="{'default_employee_id': active_id}" >
+                   <field name ="lp_is_appraisal_date_due" invisible="1"/>
+                                  <field name ="lp_last_appraisal_record" invisible="1"/>
+
+
+
+
+
+
+                        <tree editable="bottom">
+                    <field name="lp_previous_company" required="1"/>
+                    <field name="lp_join_date"  />
+                    <field name ="lp_expertised"/>
+                    <field name="lp_end_date"/>
+                    <field name="lp_Reason_left"/>
+                    <field name="lp_salary"/>
+                    <field name="lp_experience"/>
+                                 </tree>
+                            </field>
+                        </page>
+                 </xpath>
+            </field>
+            </record>
+
+            <record id="lp_hr_employee_filters" model="ir.ui.view">
+        <field name="name">lp.hr.employee.view.filter</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+
+
+            <filter name="message_needaction" position="after">
+                <separator/>
+                     <filter string="Review Due Date" name="lp_due_date" domain="[('lp_is_appraisal_date_due','=',True)]"/>
+                     <filter string="Employee - Probation Period" name="lp_probationary_period" domain="[('lp_is_probation_completed', '=', False)]"/>
+
+            </filter>
+        </field>
+    </record>
+
+                    <record id="lp_hr_employee_tree" model="ir.ui.view">
+        <field name="name">lp.hr.employee.view.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+
+         <xpath expr="//field[@name='name']" position="after">
+                        <field name="lp_next_appraisal_date"/>
+             <field name="lp_is_probation_completed"/>
+
+                   </xpath>
+
+
+        </field>
+    </record>
+    </data>
+</odoo>

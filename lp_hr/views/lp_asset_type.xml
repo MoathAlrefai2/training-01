@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="asset_type_tree">
+		<field name="name">Asset Types</field>
+		<field name="model">asset.type</field>
+		<field name="arch" type="xml">
+			<tree string="Asset Types" editable="bottom">
+				<field name="lp_name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="asset_type_action" model="ir.actions.act_window">
+		<field name="name">Asset Types</field>
+		<field name="res_model">asset.type</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem name="Asset Types" id="menu_asset_types"
+		parent="account.account_management_menu" action="asset_type_action"
+		sequence="2" />
+
+	<record id="asset_form_inherit" model="ir.ui.view">
+		<field name="name">account.asset.form.inherit</field>
+		<field name="model">account.asset</field>
+		<field name="inherit_id"
+			ref="account_asset.view_account_asset_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//div[hasclass('oe_title')]" position="inside">
+				<h2>
+					<label for="lp_type_id" />
+					<field name="lp_type_id"
+						options="{'no_create': True, 'no_edit': True,'no_open':True}"
+						attrs="{'readonly': [('state', 'not in', ('draft', 'model'))]}" />
+				</h2>
+
+			</xpath>
+		</field>
+	</record>
+
+
+</odoo>

@@ -1,0 +1,21 @@
+<templates>
+    <t t-extend="ImportView.buttons">
+        <t t-jquery=".o_import_import_full" t-operation="before">
+            <label t-if ="res_model=='account.analytic.line'" for="oe_import_c_import">Select Template</label>
+            <div t-if ="res_model=='account.analytic.line'" class="select2-container c_import_cont">
+                <select class="oe_import_c_import select2-choice " aria-live="polite" id="oe_import_c_import" style="width: 100%;  height:30px; bottom: auto; display: block;">
+                    <option value=""></option>
+                    <option value="lp-general">LP-General</option>
+                </select>
+            </div>
+            <button type="button" t-if ="res_model=='account.analytic.line'" class="btn btn-primary my_class">Download</button>
+        </t>
+    </t>
+    <t t-extend="ListView.buttons">
+        <t t-jquery=".o_list_button_add" t-operation="after">
+            <button t-if="widget.modelName == 'account.analytic.line'" type="button" class="import-btn btn btn-primary">
+                Import records
+            </button>
+        </t>
+    </t>
+</templates>

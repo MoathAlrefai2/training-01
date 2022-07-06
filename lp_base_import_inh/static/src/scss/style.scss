@@ -1,0 +1,13 @@
+.c_import_cont::after{
+    content:'\f063';
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size:12px;
+    position:absolute;
+    top:20%;
+    right:5px;
+}
+#oe_import_c_import{
+    padding: 0 25px 0px 5px;
+}

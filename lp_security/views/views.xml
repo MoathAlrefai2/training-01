@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="hr_gamification.hr_hr_employee_view_form"
+			model="ir.ui.view">
+			<field name="active">False</field>
+		</record>
+		<record id="hr_gamification.hr_employee_public_view_form"
+			model="ir.ui.view">
+			<field name="active">False</field>
+		</record>
+
+		<record id="base.user_groups_view" model="ir.ui.view">
+			<field name="active">False</field>
+		</record>
+
+		<record id="groups_form_inherit" model="ir.ui.view">
+			<field name="name">groups.form.inherit</field>
+			<field name="model">res.groups</field>
+			<field name="inherit_id" ref="base.view_groups_form" />
+			<field name="arch" type="xml">
+				<field name="share" position="after">
+					<field name="show_group" />
+				</field>
+			</field>
+		</record>
+
+
+		<record id="project_sale_timesheet_form_inherited"
+			model="ir.ui.view">
+			<field name="name">project.form.inherit</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id"
+				ref="sale_timesheet.project_project_view_form" />
+			<field name="arch" type="xml">
+				<button name="action_make_billable" position="attributes">
+					<attribute name="groups">sales_team.group_sale_manager
+					</attribute>
+				</button>
+			</field>
+		</record>
+
+
+		<record id="users_form_inherit" model="ir.ui.view">
+			<field name="name">users.form.inherit</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//page[@name='access_rights']//field[@name='groups_id']"
+					position="replace">
+					<field name="lp_groups_id" domain="[('show_group','=',True)]" />
+
+					<field name="groups_id" groups="base.group_no_one" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="employee_public_form_inherit" model="ir.ui.view">
+			<field name="name">employee.form.inherit</field>
+			<field name="model">hr.employee.public</field>
+			<field name="inherit_id"
+				ref="hr_appraisal.hr_employee_public_view_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//button[@name='action_send_appraisal_request'][1]"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath
+					expr="//button[@name='action_send_appraisal_request'][2]"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+			</field>
+		</record>
+
+
+
+		<record id="employee_form_inherit" model="ir.ui.view">
+			<field name="name">employee.form.inherit</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//page[@name='personal_information']"
+					position="attributes">
+					<attribute name="groups">hr.group_hr_user,!lp_security.department_head_group,!lp_security.section_head_group
+					</attribute>
+				</xpath>
+				<xpath
+					expr="//button[@name='action_send_appraisal_request'][1]"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath
+					expr="//button[@name='action_send_appraisal_request'][2]"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="sale_crm.crm_case_form_view_oppor"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('sales_team.group_sale_salesman'))]" />
+		</record>
+
+	<record id="website_livechat.website_visitor_view_tree"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('sales_team.group_sale_salesman'))]" />
+		</record>
+
+
+
+		<record id="website_sms.website_visitor_view_form"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('sales_team.group_sale_salesman'))]" />
+		</record>
+
+		<record id="website_crm.website_visitor_view_form"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('sales_team.group_sale_salesman'))]" />
+		</record>
+
+		<record id="website_sms.website_visitor_view_kanban"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('sales_team.group_sale_salesman'))]" />
+		</record>
+
+		<record id="hr_holidays.menu_hr_holidays_root"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('sales_team.group_sale_salesman'))]" />
+		</record>
+
+		<record id="hr_holidays.view_employee_form_leave_inherit"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('hr_holidays.group_hr_holidays_manager'))]" />
+		</record>
+
+		<record id="website_partner.view_partners_form_website"
+			model="ir.ui.view">
+			<field name="groups_id"
+				eval="[(4,ref('base.group_partner_manager'))]" />
+		</record>
+
+
+
+
+		<record id="sms.res_partner_act_window_sms_composer_multi"
+			model="ir.actions.act_window">
+			<field name="groups_id"
+				eval="[(4,ref('base.group_partner_manager'))]" />
+		</record>
+
+
+		<record id="sms.res_partner_act_window_sms_composer_multi"
+			model="ir.actions.act_window">
+			<field name="groups_id"
+				eval="[(4,ref('base.group_partner_manager'))]" />
+		</record>
+		<record id="sms.res_partner_act_window_sms_composer_single"
+			model="ir.actions.act_window">
+			<field name="groups_id"
+				eval="[(4,ref('base.group_partner_manager'))]" />
+		</record>
+
+
+		<record id="sale_subscription_form_inherit" model="ir.ui.view">
+			<field name="name">sale.subscription.form.inherit</field>
+			<field name="model">sale.subscription</field>
+			<field name="inherit_id"
+				ref="sale_subscription.sale_subscription_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='generate_recurring_invoice']"
+					position="attributes">
+					<attribute name="groups">account.group_account_invoice
+					</attribute>
+				</xpath>
+				<xpath expr="//button[@name='prepare_renewal_order']"
+					position="attributes">
+					<attribute name="groups">!lp_security.department_head_group
+					</attribute>
+				</xpath>
+			</field>
+		</record>
+		<record id="project_kanban_inherit" model="ir.ui.view">
+			<field name="name">project.kanban.inherit</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id" ref="project.view_project_kanban" />
+			<field name="arch" type="xml">
+				<span t-if="record.partner_id.value" position="replace">
+					<div
+						groups="lp_security.lp_group_access_not_private_contact,base.group_private_addresses">
+						<span t-if="record.partner_id.value">
+							<strong>
+								<t t-esc="record.partner_id.value" />
+							</strong>
+						</span>
+					</div>
+				</span>
+			</field>
+		</record>
+		<record id="project_task_kanban_inherit" model="ir.ui.view">
+			<field name="name">project.task.kanban.inherit</field>
+			<field name="model">project.task</field>
+			<field name="inherit_id" ref="project.view_task_kanban" />
+			<field name="arch" type="xml">
+				<t t-else="record.email_from.raw_value" position="replace" />
+
+
+				<t t-if="record.partner_id.value" position="replace">
+					<div
+						groups="lp_security.lp_group_access_not_private_contact,base.group_private_addresses">
+						<t t-if="record.partner_id.value">
+							<span t-if="!record.partner_is_company.raw_value">
+								<field name="commercial_partner_id" />
+							</span>
+							<span t-else="">
+								<field name="partner_id" />
+							</span>
+						</t>
+						<t t-else="record.email_from.raw_value">
+							<span>
+								<field name="email_from" />
+							</span>
+						</t>
+					</div>
+				</t>
+			</field>
+		</record>
+		<record id="project_task_form_inherit" model="ir.ui.view">
+			<field name="name">project.task.form.inherit</field>
+			<field name="model">project.task</field>
+			<field name="inherit_id" ref="project.view_task_form2" />
+			<field name="arch" type="xml">
+				<xpath expr="//div[1]" position="attributes">
+					<attribute name="groups">
+
+						lp_security.lp_group_access_not_private_contact,base.group_private_addresses
+					</attribute>
+				</xpath>
+				<span id="remaining_hours_so_label" position="attributes">
+
+					<attribute name="groups">
+
+						lp_security.lp_group_access_not_private_contact,base.group_private_addresses
+					</attribute>
+				</span>
+
+				<field name="remaining_hours_so" position="attributes">
+
+					<attribute name="groups">
+
+						lp_security.lp_group_access_not_private_contact,base.group_private_addresses
+					</attribute>
+				</field>
+
+			</field>
+		</record>
+
+
+		<record id="project_search_inherit" model="ir.ui.view">
+			<field name="name">project.search.inherit</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id"
+				ref="project.view_project_project_filter" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="attributes">
+					<attribute name="groups">
+
+						lp_security.lp_group_access_not_private_contact,base.group_private_addresses
+					</attribute>
+				</field>
+				<filter name="Partner" position="attributes">
+					<attribute name="groups">
+						lp_security.lp_group_access_not_private_contact,base.group_private_addresses
+					</attribute>
+				</filter>
+			</field>
+		</record>
+		<record id="appraisal_form_inherit" model="ir.ui.view">
+			<field name="name">hr.appraisal.inherit</field>
+			<field name="model">hr.appraisal</field>
+			<field name="inherit_id"
+				ref="hr_appraisal.view_hr_appraisal_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//div[hasclass('oe_button_box')]"
+					position="attributes">
+					<attribute name="groups">hr_appraisal.group_hr_appraisal_user
+					</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="sale_form_inherit" model="ir.ui.view">
+			<field name="name">sale.order.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id"
+				ref="sale_subscription.view_sale_subscription_order_line" />
+			<field name="arch" type="xml">
+				<button name="action_open_subscriptions"
+					position="attributes">
+					<attribute name="groups">!lp_security.department_head_group
+					</attribute>
+				</button>
+			</field>
+		</record>
+
+		<record id="x_trip_form_inherit" model="ir.ui.view">
+			<field name="name">x_trip.inherit</field>
+			<field name="model">x_trip</field>
+			<field name="inherit_id"
+				ref="studio_customization.odoo_studio_default__8fabcbd5-37e4-42ca-9e41-2ff5d2b08319" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//field[@name='x_studio_project_distribution']//tree//field[@name='x_studio_project']"
+					position="after">
+					<field name="x_studio_trip" invisible="1" />
+				</xpath>
+				<xpath
+					expr="//field[@name='x_studio_project_distribution']//tree//field[@name='x_studio_project']"
+					position="attributes">
+					<attribute name="domain">
+						['|',('allowed_internal_user_ids.employee_ids','in',parent.x_studio_employee),('privacy_visibility','!=','followers')]
+					</attribute>
+				</xpath>
+
+				<xpath
+					expr="//field[@name='x_studio_project_distribution']//form//field[@name='x_studio_project']"
+					position="attributes">
+					<attribute name="domain">
+						['|',('allowed_internal_user_ids.employee_ids','in',parent.x_studio_employee),('privacy_visibility','!=','followers')]
+					</attribute>
+				</xpath>
+
+			</field>
+		</record>
+
+		<record id="x_awardeddays_form_inherit" model="ir.ui.view">
+			<field name="name">x_awardeddays.inherit</field>
+			<field name="model">x_awardeddays</field>
+			<field name="inherit_id"
+				ref="studio_customization.odoo_studio_default__051e707a-1322-47eb-bc60-ad4f3fc23296" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='x_studio_project']"
+					position="attributes">
+					<attribute name="domain">
+						['|',('allowed_internal_user_ids.employee_ids','in',x_studio_employee),('privacy_visibility','!=','followers')]
+					</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="studio_expense_form_inherit" model="ir.ui.view">
+			<field name="name">hr.expense.inherit</field>
+			<field name="model">hr.expense</field>
+			<field name="inherit_id"
+				ref="studio_customization.odoo_studio_hr_expen_1024eb00-9171-415f-8194-7c7a4891a3c3" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='x_studio_project']"
+					position="attributes">
+					<attribute name="domain">
+						['|',('allowed_internal_user_ids.employee_ids','in',employee_id),('privacy_visibility','!=','followers')]
+					</attribute>
+				</xpath>
+			</field>
+		</record>
+		<record id="partner_form_inherit" model="ir.ui.view">
+			<field name="name">res.partner.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="crm.view_partners_form_crm1" />
+			<field name="arch" type="xml">
+				<button name="schedule_meeting" position="attributes">
+					<attribute name="groups">lp_security.director_group</attribute>
+				</button>
+			</field>
+		</record>
+
+		<record id="website_visitor_view_kanban_inherited"
+			model="ir.ui.view">
+			<field name="name">website.visitor.inherit</field>
+			<field name="model">website.visitor</field>
+			<field name="inherit_id"
+				ref="website.website_visitor_view_kanban" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//div[hasclass('w_visitor_kanban_actions_ungrouped')]//button[@name='action_send_mail'][1]"
+					position="attributes">
+					<attribute name="groups">sales_team.group_sale_salesman
+					</attribute>
+				</xpath>
+				<xpath
+					expr="//div[hasclass('w_visitor_kanban_actions')]//button[@name='action_send_mail'][1]"
+					position="attributes">
+					<attribute name="groups">sales_team.group_sale_salesman
+					</attribute>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="website_visitor_view_form_inherited"
+			model="ir.ui.view">
+			<field name="name">website.visitor.inherit</field>
+			<field name="model">website.visitor</field>
+			<field name="inherit_id"
+				ref="website_livechat.website_visitor_view_form" />
+			<field name="arch" type="xml">
+				<button name="action_send_mail" position="attributes">
+					<attribute name="groups">sales_team.group_sale_salesman
+					</attribute>
+				</button>
+			</field>
+		</record>
+
+
+		<record id="website_visitor_view_tree_inherited"
+			model="ir.ui.view">
+			<field name="name">website.visitor.tree.inherit</field>
+			<field name="model">website.visitor</field>
+			<field name="inherit_id"
+				ref="website.website_visitor_view_tree" />
+			<field name="arch" type="xml">
+				<button name="action_send_mail" position="attributes">
+					<attribute name="groups">sales_team.group_sale_salesman
+					</attribute>
+				</button>
+			</field>
+		</record>
+		<record id="sms_website_visitor_view_tree_inherited"
+			model="ir.ui.view">
+			<field name="name">website.visitor.tree.inherit</field>
+			<field name="model">website.visitor</field>
+			<field name="inherit_id"
+				ref="website_sms.website_visitor_view_tree" />
+			<field name="arch" type="xml">
+				<button name="action_send_sms" position="attributes">
+					<attribute name="groups">sales_team.group_sale_salesman
+					</attribute>
+				</button>
+			</field>
+		</record>
+	</data>
+</odoo>

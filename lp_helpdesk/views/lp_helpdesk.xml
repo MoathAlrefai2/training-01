@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+
+
+
+
+
+
+ <record id="lp_helpdesk_view_form_timesheet_inherit" model="ir.ui.view">
+     <field name="name">helpdesk.ticket.form.inherit.helpdesk</field>
+    <field name="model">helpdesk.ticket</field>
+    <field name="inherit_id" ref="helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet" />
+    <field name="arch" type="xml" >
+            <xpath expr="//page[@name='description']" position="after">
+                                    <page string="Internal Note" >
+  <field name="lp_internal_note" placeholder="Internal notes ..."/>
+                                    </page>
+                                                    <page string="Analysis Result" >
+  <field name="lp_analysis_result"  placeholder="Analysis Result"/>
+                                    </page>
+                    </xpath>
+
+        </field>
+  </record>
+
+
+
+
+ <record id="lp_helpdesk_view_search" model="ir.ui.view">
+     <field name="name">lp_helpdesk</field>
+    <field name="model">helpdesk.ticket</field>
+    <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_search" />
+    <field name="arch" type="xml" >
+ <xpath expr="//filter[@name='is_close']" position="after">
+                <filter string="Is Billable" domain="[('lp_is_billable','=',True)]" name="lp_is_billable"/>
+     <filter string="Knowledge Base Relevant" domain="[('lp_knowledge_base_relvant','=',True)]" name="lp_knowledge_base_relvant"/>
+ </xpath>
+
+    </field>
+  </record>
+
+
+
+
+
+ <record id="lp_helpdesk_tree_form" model="ir.ui.view">
+     <field name="name">lp_helpdesk</field>
+    <field name="model">helpdesk.ticket</field>
+    <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree" />
+    <field name="arch" type="xml" >
+        <xpath expr="//field[@name='stage_id']" position="after">
+            <field name="lp_is_billable" optional="show"/>
+                       <field name="lp_estimated_hours" optional="show"/>
+             <field name="lp_actual_hours" optional="show"/>
+        </xpath>
+    </field>
+  </record>
+
+ <record id="lp_helpdesk_view_form" model="ir.ui.view">
+     <field name="name">lp_helpdesk</field>
+    <field name="model">helpdesk.ticket</field>
+    <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
+    <field name="arch" type="xml" >
+
+          <xpath expr="//field[@name='sla_status_ids']" position="replace">
+        <field name="sla_status_ids" widget="many2many_tags" readonly="1" options="{'color_field': 'color'}" groups="helpdesk.group_use_sla"/>
+          </xpath>
+
+         <xpath expr="//field[@name='email_cc']" position="after">
+
+           <field name="lp_clousure_reason" string="Closure Reason" widget="res_partner_many2one"/>
+
+
+                         <field name="lp_affected_system" string=" Affected Systems" widget="many2many_tags" delete="1"/>
+            <field name="create_date" string="Created Date" readonly="1"/>
+
+            <field name="lp_previntive_action" widget='checkbox'/>
+              <field name="lp_related_item" placeholder="Related Items"/>
+             <field name="lp_level_of_support" />
+             <field name="lp_knowledge_base_relvant" widget='checkbox'/>
+             <field name="lp_is_billable" widget='checkbox'/>
+             <field name="lp_estimated_hours"/>
+             <field name="lp_actual_hours" />
+                  </xpath>
+    </field>
+  </record>
+
+    <record id="helpdesk_ticket_systems" model="ir.actions.act_window">
+        <field name="name">Affected Systems</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">helpdesk.affected</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No Systems found. Let's create one!
+          </p><p>
+            Systems are perfect to categorize your tickets.
+          </p>
+        </field>
+    </record>
+
+
+        <record id="helpdesk_ticket_closure" model="ir.actions.act_window">
+        <field name="name">Closure Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">clousure.reason</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No Closure Reason found. Let's create one!
+          </p><p>
+            Closure Reason are perfect to categorize your tickets.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="helpdesk.helpdesk_closure_reason" action="helpdesk_ticket_closure"
+        sequence="13" parent="helpdesk.helpdesk_menu_config" />
+
+    <menuitem id="helpdesk.helpdesk_systems" action="helpdesk_ticket_systems"
+        sequence="12" parent="helpdesk.helpdesk_menu_config" />
+
+    <menuitem id="helpdesk.helpdesk_tag_new" action="helpdesk.helpdesk_tag_action"
+        sequence="10" parent="helpdesk.helpdesk_menu_config" />
+
+</odoo>

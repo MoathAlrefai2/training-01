@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="base_import assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/lp_base_import_inh/static/src/js/import_action.js"></script>
+                <link rel="stylesheet" href="/lp_base_import_inh/static/src/scss/style.scss"></link>
+            </xpath>
+        </template>
+        <record id="base_import.access_base_import_import" model="ir.model.access">
+            <field name="perm_read">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+    </data>
+</odoo>

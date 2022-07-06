@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record id="lp_contract_employee_report" model="ir.ui.view">
+    <field name="model">hr.contract.employee.report</field>
+    <field name="inherit_id" ref="hr_contract_reports.contract_employee_report_view_search" />
+    <field name="arch" type="xml">
+                 <xpath expr="//filter[@name='year']" position="after">
+                                         <filter string="Active Contracts" name="active_contracts" domain="[('lp_contract_status', '=', 'open')]"/>
+
+                 </xpath>
+
+
+
+
+    </field>
+      </record>
+
+
+    <record id="hr_contract_reports.contract_employee_report_action" model="ir.actions.act_window">
+     <field name="context">{'search_default_active_contracts': 1}</field>
+</record>
+</odoo>

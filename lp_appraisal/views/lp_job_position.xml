@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="lp_job_position_view_form" model="ir.ui.view">
+		<field name="name">LP Job Position</field>
+		<field name="model">hr.job</field>
+		<field name="inherit_id" ref="hr_appraisal.hr_job_view_form" />
+		<field name="arch" type="xml">
+					<xpath expr="//page[3]//group[1]" position="replace">
+		</xpath>
+			<xpath expr="//page[3]" position="inside">
+				<group string="Survey">
+					<group string="Job Description">
+						<field widget="question_page_one2many" context="{'appraisal_question':True,'field':'lp_job_id'}"
+							name="lp_job_description_ids" nolabel="1">
+							<tree decoration-bf="is_page" editable="bottom">
+								<field name="sequence" widget="handle"/>
+								<field name="title" widget="survey_description_page"/>
+								<field name="is_page" invisible="1" />
+								<control>
+									<create name="add_question_control"
+										string="Add a question" />
+								</control>
+							</tree>
+						</field>
+					</group>
+				</group>
+			</xpath>
+		</field>
+	</record>
+</odoo>

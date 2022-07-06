@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <record id="inherit_form_view_ACG" model="ir.ui.view">
+      <field name="name"> view.move.form.inherit </field>
+      <field name="model">account.analytic.group</field>
+      <field name="inherit_id" ref="analytic.account_analytic_group_form_view"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='parent_id']" position = "after">
+          <field name="lp_analytic_account" options="{'no_open':True,'no_create':1,'no_create_edit':1}" />
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

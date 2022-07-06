@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="asset_management_tree">
+		<field name="name">Assets Management</field>
+		<field name="model">asset.management</field>
+		<field name="arch" type="xml">
+			<tree string="Assets Management">
+				<field name="lp_name" />
+				<field name="lp_related_asset_id"/>
+				<field name="lp_serial_number" />
+				<field name="lp_mac_address" />
+				<field name="lp_used_by" />
+				<field name="lp_employee_id" />
+				<field name="lp_department_id" />
+				<field name="lp_state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_asset_management_form" model="ir.ui.view">
+		<field name="name">Assets Management</field>
+		<field name="model">asset.management</field>
+		<field name="arch" type="xml">
+			<form duplicate="0">
+				<header>
+					<button name="acrion_deprecate" string="Deprecate"
+						type="object" class="oe_highlight"
+						attrs="{'invisible':[('lp_state','=','deprecated')]}" />
+					<field name="lp_state" widget="statusbar" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="lp_name" />
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="lp_related_asset_id" domain="[('asset_type','=','purchase')]" context="{'asset_management':True}"
+								options="{'no_create': True, 'no_edit': True,'no_open':True}" />
+							<field name="lp_acquisition_date"/>
+							<field name="lp_serial_number"/>
+							<field name="lp_brand" />
+							<field name="lp_model" />
+							<field name="lp_mac_address" />
+              <field name="lp_barcode" />
+						</group>
+						<group>
+							<field name="lp_used_by" />
+							<field name="lp_employee_id"
+								attrs="{'invisible':[('lp_used_by','!=','employee')]}"
+								options="{'no_create': True, 'no_edit': True,'no_open':True}" />
+							<field name="lp_department_id"
+								options="{'no_create': True, 'no_edit': True,'no_open':True}"
+								attrs="{'invisible':[('lp_used_by','!=','department')]}" />
+						</group>
+					</group>
+					<field name="lp_notes" nolabel="1" placeholder="Notes..." />
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" />
+					<field name="activity_ids" />
+					<field name="message_ids" />
+				</div>
+			</form>
+		</field>
+	</record>
+
+	<record id="view_asset_management_search" model="ir.ui.view">
+		<field name="name">asset.management.search</field>
+		<field name="model">asset.management</field>
+		<field name="arch" type="xml">
+			<search string="Assets Management">
+				<field name="lp_name" />
+				<field name="lp_related_asset_id" />
+
+				<filter string="Used By Employee" name="used_by_employee"
+					domain="[('lp_used_by','=', 'employee')]" />
+				<filter string="Used By Department" name="used_by_department"
+					domain="[('lp_used_by','=', 'department')]" />
+
+				<separator />
+				<filter string="Assigned" name="assigned"
+					domain="[('lp_state','=', 'assigned')]" />
+					
+				<filter string="Unassigned" name="unassigned"
+					domain="[('lp_state','=', 'unassigned')]" />
+				
+				<filter string="Deprecated" name="deprecated"
+					domain="[('lp_state','=', 'deprecated')]" />
+				<filter string="Not Deprecated" name="not_deprecated"
+					domain="[('lp_state','!=', 'deprecated')]" />
+				
+				<group expand="0" string="Group By...">
+					<filter string="Used By" name="used_by" domain="[]"
+						context="{'group_by':'lp_used_by'}" />
+					<filter string="Status" name="state" domain="[]"
+						context="{'group_by':'lp_state'}" />
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="asset_managemnt_action"
+		model="ir.actions.act_window">
+		<field name="name">Assets Management</field>
+		<field name="res_model">asset.management</field>
+		<field name="view_mode">tree,form,search</field>
+		<field name="context">{'search_default_not_deprecated':1}</field>
+	</record>
+
+	<menuitem name="Assets Management" id="asset_managemnt_menu"
+		parent="hr.menu_hr_root" action="asset_managemnt_action" sequence="11" />
+
+</odoo>

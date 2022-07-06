@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <record id="lp_department_view_form" model="ir.ui.view">
+    <field name="model">hr.department</field>
+    <field name="inherit_id" ref="hr.view_department_form" />
+    <field name="arch" type="xml">
+      <field name="manager_id" position="after">
+        <field name="lp_type" />
+        <field name="lp_category" attrs="{'invisible' :[('lp_type', '!=', 'department')]}"/>
+        <field name="lp_analytic_account_group" attrs="{'invisible' :[('lp_type', '!=', 'department')], 'required': [('lp_type', '=', 'department')]}" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+      </field>
+    </field>
+  </record>
+</odoo>

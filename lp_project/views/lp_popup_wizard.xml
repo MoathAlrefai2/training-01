@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_wizard_lp" model="ir.ui.view">
+        <field name="name">project.wizard.form</field>
+        <field name="model">project.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Information form">
+                <group attrs="{'invisible' : [('lp_boolean', '=', True)]}">
+                    <h2> Sync DevOps has been Completed </h2>
+
+                </group>
+                                <group attrs="{'invisible' : [('lp_boolean', '=', False)]}">
+                    <h2> No work items of type Task found in project :<field name="lp_get_project" readonly="1"/></h2>
+
+                </group>
+                <group attrs="{'invisible' : [('lp_boolean', '=', True)]}">
+                <field name="lp_updates_counter"/>
+                    <field name="lp_insert_counter"/>
+                 <field name="lp_error_counter"/>
+                    <field name="lp_boolean" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="OK" special="cancel" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
+

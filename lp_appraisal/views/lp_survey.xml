@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="lp_survey_userinput_view_form" model="ir.ui.view">
+		<field name="name">LP Survey UserInput</field>
+		<field name="model">survey.user_input</field>
+		<field name="inherit_id"
+			ref="survey.survey_user_input_view_form" />
+		<field name="arch" type="xml">
+			<field name="scoring_success" position="replace" />
+			<xpath
+				expr="//field[@name='user_input_line_ids']//field[@name='create_date']"
+				position="replace" />
+			<xpath
+				expr="//field[@name='user_input_line_ids']//field[@name='answer_is_correct']"
+				position="replace" />
+			<xpath
+				expr="//field[@name='user_input_line_ids']//field[@name='answer_type']"
+				position="replace" />
+			<xpath expr="//field[@name='test_entry']" position="after">
+				<field name="lp_employee_survey_id" invisible="1" />
+			</xpath>
+			<xpath expr="//field[@name='user_input_line_ids']//tree"
+				position="attributes">
+				<attribute name="create">0</attribute>
+				<attribute name="delete">0</attribute>
+			</xpath>
+			<form position="inside">
+				<div class="oe_chatter">
+					<field name="message_follower_ids" />
+					<field name="activity_ids" />
+					<field name="message_ids" />
+				</div>
+
+			</form>
+		</field>
+	</record>
+
+	<record id="lp_survey_userinput_line_view_form"
+		model="ir.ui.view">
+		<field name="name">LP Survey UserInput Line</field>
+		<field name="model">survey.user_input.line</field>
+		<field name="inherit_id"
+			ref="survey.survey_user_input_line_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//group[2]" position="inside">
+				<field name="lp_appraisal_survey" invisible="1" />
+				<field name="lp_reviewer_note"
+					attrs="{'required':[('lp_appraisal_survey','=',True),('answer_score','!=',100),('lp_question_type','=','simple_choice')]}" />
+				<field name="lp_question_type" invisible="1" />
+				<field name="lp_question_suggested_answer_ids" invisible="1" />
+			</xpath>
+			<xpath expr="//group[1]//field[@name='question_id']"
+				position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//group[2]//field[@name='matrix_row_id']"
+				position="attributes">
+				<attribute name="attrs">{'invisible':[('lp_question_type','=','simple_choice')]}
+				</attribute>
+			</xpath>
+			<xpath expr="//group[2]//field[@name='suggested_answer_id']"
+				position="attributes">
+				<attribute name="domain">[('id','in',lp_question_suggested_answer_ids)]
+				</attribute>
+			</xpath>
+
+		</field>
+	</record>
+
+	<record id="lp_survey_question_view_form" model="ir.ui.view">
+		<field name="name">LP Survey Question</field>
+		<field name="model">survey.question</field>
+		<field name="inherit_id" ref="survey.survey_question_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//div[hasclass('oe_title')]" position="after">
+				<group>
+					<group>
+						<field name="lp_weight"
+							attrs="{'invisible':[('is_page','=',False)]}" />
+					</group>
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="lp_survey_view_form" model="ir.ui.view">
+		<field name="name">LP Survey</field>
+		<field name="model">survey.survey</field>
+		<field name="inherit_id" ref="survey.survey_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//div[hasclass('oe_title')]" position="after">
+				<group>
+					<group>
+						<field name="lp_available_on_appraisal" />
+						<field name="lp_job_id"
+							options="{'no_create': True, 'no_edit': True,'no_open':True}"
+							attrs="{'invisible':[('lp_available_on_appraisal','=',False)]}" />
+					</group>
+				</group>
+
+			</xpath>
+		</field>
+
+	</record>
+</odoo>

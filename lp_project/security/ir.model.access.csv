@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+lp_access_project_wizard_approver,project.wizard,model_project_wizard,,1,1,1,1
+,,,,,,,
+project.access_project_task,project.task,model_project_task,project.group_project_user,1,0,0,0
+access_project_task,project.task,model_project_task,project.group_project_manager,1,1,1,1
+hr_timesheet.access_project_task,project.task.timesheet.user,model_project_task,hr_timesheet.group_hr_timesheet_user,1,0,0,0
+hr_timesheet.access_project_task,project.task.timesheet.user,model_project_task,project.group_project_manager,1,1,1,1
+,,,,,,,
+lp_access_project_manager,lp.access.project.manager,model_project_project,lp_crm.lp_group_crm_project_manager,1,1,1,1
+lp_access_task_project_manager,lp.access.task.project.manager,model_project_task,lp_crm.lp_group_crm_project_manager,1,1,1,1

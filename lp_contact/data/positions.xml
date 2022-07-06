@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+
+    <record model="hr.job" id="position_1">
+        <field name="name">Decision maker</field>
+
+    </record>
+
+    <record model="hr.job" id="position_2">
+        <field name="name">Business influencer</field>
+
+    </record>
+    <record model="hr.job" id="position_3">
+        <field name="name">Technical influencer</field>
+
+    </record>
+        <record model="hr.job" id="position_4">
+        <field name="name">Technical</field>
+
+    </record>
+        <record model="hr.job" id="position_5">
+        <field name="name">Information Provider</field>
+
+    </record>
+
+</odoo>

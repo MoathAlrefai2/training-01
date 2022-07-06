@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record id="lp_contact_view_form" model="ir.ui.view">
+     <field name="name">contact_lp</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='parent_id']" position="replace">
+                            <field name="parent_id"  widget="res_partner_many2one" placeholder="Company" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'show_vat': True}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')],'required':[('company_type','=','person')]}"/>
+        </xpath>
+           <xpath expr="//field[@name='type']" position="after">
+
+             <field name="lp_attributes" string="Attributes" options="{'no_open':True,'no_create':1,'no_create_edit':1}" widget="many2many_tags" attrs="{'invisible' : [('company_type', '=', 'company')]}"  />
+           </xpath>
+            <xpath expr="//field[@name='name']" position="replace">
+                <div class="address_format">
+                <field name="lp_label_name" widget="label_selection"  style="background-color:grey;" attrs="{'invisible' : [('company_type', '=', 'company')]}" class="oe_edit_only"/>
+                <field name="lp_name"  placeholder="Name"  style="width: 58%" class="oe_read_only"/>
+              <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"  style="width: 58%" class="oe_edit_only"/>
+
+                </div>
+            </xpath>
+    </field>
+  </record>
+
+
+</odoo>

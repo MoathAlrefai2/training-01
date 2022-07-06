@@ -1,0 +1,14 @@
+<odoo>
+	<data>
+		<!-- survey assets -->
+		<template inherit_id="survey.survey_assets"
+			id="survey_assets_inherited">
+			<xpath expr="." position="inside">
+				<link rel="stylesheet" type="text/scss"
+					href="/lp_appraisal/static/scss/survey_form.scss" />
+				<script type="text/javascript"
+					src="/lp_appraisal/static/src/js/survey_form.js" />
+			</xpath>
+		</template>
+	</data>
+</odoo>

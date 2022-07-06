@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+  <record model='ir.ui.menu' id='crm.crm_menu_root'>
+    <field name="groups_id" eval="[(6,0,[ref('lp_security.department_head_group'),ref('lp_security.marketing_officer'),ref('lp_security.crm_manager'),ref('sales_team.group_sale_salesman_all_leads'),ref('sales_team.group_sale_manager')])]"/>
+</record>
+ <record model='ir.ui.menu' id='sale_crm.sale_order_menu_quotations_crm'>
+    <field name="groups_id" eval="[(4,ref('sales_team.group_sale_salesman'))]"/>
+</record>
+
+ <record model='ir.ui.menu' id='hr_appraisal.menu_hr_appraisal_goal'>
+    <field name="groups_id" eval="[(4,ref('hr_appraisal.group_hr_appraisal_user'))]"/>
+</record>
+
+    <record model='ir.ui.menu' id='mail.menu_root_discuss'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+        <record model='ir.ui.menu' id='contacts.menu_contacts'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+            <record model='ir.ui.menu' id='calendar.mail_menu_calendar'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                <record model='ir.ui.menu' id='hr.menu_hr_root'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                    <record model='ir.ui.menu' id='hr_holidays.menu_hr_holidays_root'>
+    <field name="groups_id" eval="[(6,0,[ref('hr_holidays.group_hr_holidays_responsible')])]"/>
+</record>
+                        <record model='ir.ui.menu' id='base.menu_board_root'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                        <record model='ir.ui.menu' id='hr_appraisal.menu_open_view_hr_appraisal_tree'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                            <record model='ir.ui.menu' id='hr_appraisal.menu_hr_appraisal_root'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                                <record model='ir.ui.menu' id='hr_expense.menu_hr_expense_root'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                                    <record model='ir.ui.menu' id='hr_expense.menu_hr_expense_my_expenses'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                                        <record model='ir.ui.menu' id='website.menu_website_configuration'>
+      <field name="groups_id" eval="[(6,0,[ref('lp_group_website_admin'),ref('lp_group_website_editor'),ref('base.group_system')])]"/>
+</record>
+
+ <record model='ir.ui.menu' id='website.menu_website_global_configuration'>
+      <field name="groups_id" eval="[(6,0,[ref('lp_group_website_admin'),ref('base.group_system')])]"/>
+</record>
+
+                                           <record model='ir.ui.menu' id='utm.menu_link_tracker_root'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                                           <record model='ir.ui.menu' id='studio_customization.travel_2ead4bfe-dbb5-46df-b126-cabfd41f1518'>
+    <field name="groups_id" eval="[(6,0,[ref('Travel.trip_manager')])]"/>
+</record>
+                                           <record model='ir.ui.menu' id='studio_customization.loans_cfa303e5-5e16-478a-90f0-970f375cf3dd'>
+    <field name="groups_id" eval="[(6,0,[ref('loan.loan_officer')])]"/>
+</record>
+                                               <record model='ir.ui.menu' id='studio_customization.awarded_days_412d6816-ff2b-4b01-b349-dc71dafa132c'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+                                               <record model='ir.ui.menu' id='studio_customization.loans_loan_a065ea5e-a116-4755-a4b8-a3754e34166d'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+
+      <record model='ir.ui.menu' id='hr.menu_hr_employee_payroll'>
+    <field name="groups_id" eval="[(6,0,[lp_group_access_menu])]"/>
+</record>
+    <record model='ir.ui.menu' id='hr.menu_human_resources_configuration'>
+    <field name="groups_id" eval="[(6,0,[ref('hr.group_hr_manager')])]"/>
+</record>
+
+   <record model='ir.ui.menu' id='project.menu_main_pm'>
+    <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+</record>
+
+   <record model='ir.ui.menu' id='helpdesk.helpdesk_ticket_report_menu_main'>
+    <field name="groups_id" eval="[(6,0,[ref('helpdesk.group_helpdesk_user')])]"/>
+</record>
+
+   <record model='ir.ui.menu' id='helpdesk.helpdesk_ticket_report_menu'>
+    <field name="groups_id" eval="[(6,0,[ref('helpdesk.group_helpdesk_user')])]"/>
+</record>
+
+ <record model='ir.ui.menu' id='calendar.mail_menu_calendar'>
+    <field name="groups_id" eval="[(6,0,[ref('lp_security.director_group')])]"/>
+</record>
+ <record model='ir.ui.menu' id='mail.menu_root_discuss'>
+    <field name="groups_id" eval="[(6,0,[ref('lp_security.director_group')])]"/>
+</record>
+
+<record model='ir.ui.menu' id='hr_expense.menu_hr_expense_root'>
+    <field name="groups_id" eval="[(6,0,[ref('hr_expense.group_hr_expense_team_approver')])]"/>
+</record>
+
+<record model='ir.ui.menu' id='sale.sale_menu_root'>
+    <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_salesman')])]"/>
+</record>
+<record model='ir.ui.menu' id='sale_subscription_dashboard.menu_action_subscription_dashboard_report_main'>
+    <field name="groups_id" eval="[(6,0,[ref('account.group_account_invoice')])]"/>
+</record>
+<record model='ir.ui.menu' id='sale_subscription_dashboard.menu_action_subscription_dashboard_report_salesman'>
+    <field name="groups_id" eval="[(6,0,[ref('account.group_account_invoice')])]"/>
+</record>
+<record model='ir.ui.menu' id='sale_subscription.menu_sale_subscription_alert'>
+    <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+</record>
+ <record model='ir.ui.menu' id='sale_subscription.menu_sale_subscription_root'>
+    <field name="groups_id" eval="[(6,0,[ref('lp_security.director_group'),ref('lp_security.lp_group_sales_dept_head'),ref('lp_security.lp_group_sales_manager')])]"/>
+</record>
+ <record model='ir.ui.menu' id='hr_attendance.menu_hr_attendance_root'>
+    <field name="groups_id" eval="[(6,0,[ref('lp_security.director_group')])]"/>
+</record>
+ <record model='ir.ui.menu' id='utm.menu_link_tracker_root'>
+    <field name="groups_id" eval="[(6,0,[ref('lp_security.director_group')])]"/>
+</record>
+
+
+ <record model='ir.ui.menu' id='studio_customization.awarded_days_to_appr_c0876884-8d3c-425c-9e45-d718ed2777b2'>
+    <field name="groups_id" eval="[(4,ref('awarded.awarded_officer'))]"/>
+</record>
+
+
+ <record model='ir.ui.menu' id='studio_customization.awarded_days_all_fdf3e66e-4dfb-4bf6-8644-4e416d893e8e'>
+    <field name="groups_id" eval="[(4,ref('awarded.awarded_officer'))]"/>
+</record>
+
+ <record model='ir.ui.menu' id='studio_customization.awarded_days_to_post_4c589b94-4516-4cef-a4d4-26f72dc4d617'>
+    <field name="groups_id" eval="[(4,ref('awarded.awarded_officer'))]"/>
+</record>
+
+ <record model='ir.ui.menu' id='studio_customization.awarded_days_company_5f4f37ed-55a7-4c92-91b3-44b569af09dd'>
+    <field name="groups_id" eval="[(4,ref('awarded.awarded_officer'))]"/>
+</record>
+</odoo>

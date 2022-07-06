@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_appraisal_officer,hr.appraisal.officer,model_hr_appraisal,hr.group_hr_user,1,1,1,1
+access_employee_survey,employee.survey,model_employee_survey,base.group_user,1,0,0,0
+access_employee_survey_officer,employee.survey.officer,model_employee_survey,hr.group_hr_user,1,1,1,1
+access_appraisal_surve,employee.survey.survey,model_appraisal_survey_template,hr.group_hr_user,1,1,1,1

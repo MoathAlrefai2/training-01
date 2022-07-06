@@ -1,0 +1,19 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_full_profile_admin,Read Employee Full Profile,hr.model_hr_employee,hr.group_hr_manager,1,1,1,1
+access_employee_senior_officer_access,Access Employee Full Profile,hr.model_hr_employee,lp_security.hr_senior_officer,1,1,1,1
+access_employee_job,Access Employee Job,hr.model_hr_job,base.group_user,1,0,0,0
+lp_access_project_profitability,lp.access.project.profitability.report,sale_timesheet.model_project_profitability_report,project.group_project_user,1,1,1,1
+lp_access_contact_director,lp.access.contact.director,base.model_res_partner,lp_security.director_group,1,1,1,1
+lp_access_senior_officer_appraisal,lp.access.appraisal.senior.officer,hr_appraisal.model_hr_appraisal,hr_senior_officer,1,0,0,0
+lp_access_crm_marketing_officer,lp.access.crm.marketing.officer,crm.model_crm_lead,marketing_officer,1,1,1,0
+lp_access_crm_manager,lp.access.crm.manager,crm.model_crm_lead,crm_manager,1,1,1,0
+lp_access_crm_department_head,lp.access.crm.department.head,crm.model_crm_lead,department_head_group,1,1,1,0
+lp_access_leave,lp.access.leave.payroll,hr_holidays.model_hr_leave,hr_payroll.group_hr_payroll_user,1,0,0,0
+lp_access_allocation,lp.access.allocation.payroll,hr_holidays.model_hr_leave_allocation,hr_payroll.group_hr_payroll_user,1,0,0,0
+lp_access_leave_analysis,lp.access.leave.analsys,hr_holidays.model_hr_leave_report,hr_payroll.group_hr_payroll_user,1,0,0,0
+lp_access_leave_type,lp.access.leave.type,hr_holidays.model_hr_leave_type,hr_payroll.group_hr_payroll_user,1,0,0,0
+lp_access_import_timesheets,lp.access.import.timesheets,base_import.model_base_import_import,lp_security.director_group,1,1,1,1
+lp_access_project_distribution_manager,lp.access.project.distribution.manager,studio_customization.project_distribution_fd076e6e-db95-42e8-9303-0804cd1eb3d1,Travel.trip_manager,1,1,1,1
+lp_access_project_distribution_officer,lp.access.project.distribution.officer,studio_customization.project_distribution_fd076e6e-db95-42e8-9303-0804cd1eb3d1,Travel.trip_officer,1,1,1,1
+lp_access_loan_officer,lp.access.loan.officer,studio_customization.installments_82691355-eb20-4086-a97c-f56821ef87b4,loan.loan_officer,1,1,1,0
+lp_access_website_forum,lp.access.website.forum,website_forum.model_forum_forum,lp_security.lp_group_website_admin,1,1,1,1

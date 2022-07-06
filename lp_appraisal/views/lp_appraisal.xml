@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+    <record id="lp_appraisal_view_form" model="ir.ui.view">
+        <field name="name">lp_appraisal</field>
+        <field name="model">hr.appraisal</field>
+        <field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="replace">
+                <form duplicate="0" string="Appraisal" class="o_appraisal_form">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" groups="hr_appraisal.group_hr_appraisal_user" attrs="{'invisible': [('state','!=','new')]}"/>
+                        <button name="action_done" string="Done" type="object" groups="hr_appraisal.group_hr_appraisal_user" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                        <button name="action_cancel" string="Cancel" states="pending" type="object" groups="hr_appraisal.group_hr_appraisal_user"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,pending,done" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_open_goals" icon="fa-bullseye" type="object">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Employee's</span>
+                                    <span class="o_stat_text">Goals</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" name="action_open_last_appraisal" icon="fa-calendar" type="object" attrs="{'invisible': &quot;['|', ('last_appraisal_id', '=', False), ('last_appraisal_id', '=', id)]&quot;}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value">Last Appraisal</span>
+                                    <span class="o_stat_text">
+                                        <field name="last_appraisal_date"/>
+                                    </span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" name="action_calendar_event" icon="fa-calendar" type="object">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value" attrs="{'invisible': [('meeting_id', '=', False)]}">1 Meeting</span>
+                                    <span class="o_stat_value" attrs="{'invisible': [('meeting_id', '!=', False)]}">No Meeting</span>
+                                    <span class="o_stat_text">
+                                        <field name="date_final_interview" readonly="1"/>
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="oe_title">
+                            <label for="employee_id" class="oe_edit_only"/>
+                            <h1>
+                                <field name="employee_id" attrs="{'readonly':[('state', '!=', 'new')]}" placeholder="Employee's Name"/>
+                            </h1>
+                            <group>
+                                <group>
+                                    <field name="lp_date_from" string="Date from" />
+                                    <field name="lp_effective_date"/>
+                                </group>
+                                <group>
+                                    <field name="lp_date_to" string="Date to" />
+                                </group>
+                            </group>
+                        </div>
+                        <group>
+                            <group string="Current Level">
+                                <field name="lp_job_id"/>
+                                <field name="lp_current_job_level_id" />
+                                <field name="lp_salary"/>
+                            </group>
+                            <group string="Next Level">
+
+                                <field name="lp_score_perc"/>
+                                <field name="lp_extra_points"/>
+                                <field name="lp_total_score"/>
+                                <field name="lp_next_review"/>
+                                <field name="lp_next_job_id"/>
+                                <field name="lp_next_job_level_id" />
+                                 <field name="lp_salary_raise"/>
+                                <field name="lp_total_salary"/>
+                                <field name="last_appraisal_id" invisible="1"/>
+                                <field name="employee_user_id" invisible="1"/>
+                                <field name="id" invisible="1"/>
+
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page name="employee_survey" string="Employee Survey">
+
+                                <field name="survey_ids" context="{'default_appraisal_id': active_id}">
+
+                                    <tree editable="bottom">
+                                        <field name="survey_id" attrs="{'readonly':[('lp_answer_id','!=',False)]}" options="{'no_create': True, 'no_edit': True,'no_open':True}" domain="[('lp_available_on_appraisal','=',True)]" required="1" widget="task_with_hours"/>
+                                        <field name="employee_manager_id" attrs="{'readonly':[('lp_answer_id','!=',False)]}" required="1"/>
+                                        <field name="from_date"/>
+                                        <field name="to_date"/>
+
+                                        <field name="score_percentage"/>
+                                        <field name="num_of_month" required="1"/>
+										<field name="lp_survey_state" invisible="1"/>
+										<field name="lp_answer_id" invisible="1"/>
+										<field name="lp_answer_state" />
+                                        <button name="start_survey" string="Start"
+											attrs="{'invisible':['|','|',('survey_id','=',False),('lp_survey_state','!=','open'),('lp_answer_id','!=',False)]}"
+											class="oe_highlight" type="object" />
+										<button name="continue_survey" string="Continue"
+											attrs="{'invisible':['|',('lp_answer_id','=',False),('lp_answer_state','=','done')]}"
+											class="oe_highlight" type="object" />
+										<button name="show_review_result" string="View"
+											attrs="{'invisible':['|','|',('survey_id','=',False),('lp_answer_id','=',False),('lp_answer_state','=','new')]}"
+											class="oe_highlight" type="object" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+
+
+                        <field name="active" invisible="1"/>
+                        <field name="meeting_id" invisible="1"/>
+                        <field name="can_see_employee_publish" invisible="1"/>
+                        <field name="can_see_manager_publish" invisible="1"/>
+                        <field name="waiting_feedback" invisible="1"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </xpath>
+        </field>
+
+    </record>
+    <record id="lp_appraisal_view_tree" model="ir.ui.view">
+        <field name="name">lp_appraisal.tree</field>
+        <field name="model">hr.appraisal</field>
+        <field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="lp_date_from" />
+                <field name="lp_date_to" />
+                <field name="lp_score_perc" />
+                <field name="lp_extra_points" />
+                <field name="lp_total_score" />
+                <field name="lp_job_id" />
+                <field name="lp_salary" />
+                <field name="lp_salary_raise" />
+                <field name="lp_next_review" />
+            </xpath>
+            <xpath expr="//field[@name='date_close']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='date_final_interview']" position="replace">
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="hr_appraisal.open_view_hr_appraisal_tree">
+        <field name="view_mode">tree,kanban,gantt,calendar,form,activity</field>
+        <field name="context">{'search_default_employee': 1}</field>
+    </record>
+</odoo>

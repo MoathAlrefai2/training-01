@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+lp_access_project_manager_import_timesheets,lp.access.project.manager.import.timesheets,model_base_import_import,lp_crm.lp_group_crm_project_manager,1,1,1,1

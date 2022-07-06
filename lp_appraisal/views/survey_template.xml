@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="survey_page_print_inherited"
+		inherit_id="survey.survey_page_print">
+
+		<xpath
+			expr="//div[1]//div[1]//div[1]//t[@t-call='survey.survey_button_retake']"
+			position="replace" />
+	</template>
+
+	<template id="question_simple_choice_inherited"
+		inherit_id="survey.question_simple_choice">
+
+		<xpath
+			expr="//t[@t-foreach='question.suggested_answer_ids']//i[1]"
+			position="replace" />
+		<xpath
+			expr="//t[@t-foreach='question.suggested_answer_ids']//i[1]"
+			position="replace" />
+
+
+		<xpath
+			expr="//t[@t-foreach='question.suggested_answer_ids']//span[@t-field='label.value']"
+			position="before">
+
+			<i class="fa fa-check-circle  mt-1 position-relative" />
+			<i class="fa fa-circle-thin  mt-1 position-relative" />
+		</xpath>
+
+
+		<xpath expr="//div[1]//div[2]//i[1]" position="replace" />
+		<xpath expr="//div[1]//div[2]//i[1]" position="replace" />
+
+		<xpath
+			expr="//div[1]//div[2]//span[@t-field='question.comments_message']"
+			position="before">
+<i class="fa fa-check-circle  mt-1 position-relative" />
+			<i class="fa fa-circle-thin  mt-1 position-relative" />
+		</xpath>
+
+		<xpath expr="//label[1]" position="attributes">
+			<attribute name="t-att-data-score">label.answer_score</attribute>
+		</xpath>
+		<xpath expr="//div[1]//div[3]//textarea[1]//t[1]"
+			position="attributes">
+			<attribute name="t-esc">answer_line.lp_reviewer_note or comment_line.value_char_box or ''</attribute>
+		</xpath>
+		<xpath expr="//div[1]//div[2]//textarea[1]//t[1]"
+			position="attributes">
+			<attribute name="t-esc">answer_line.lp_reviewer_note or comment_line.value_char_box or ''</attribute>
+		</xpath>
+	</template>
+	<template id="question_container_inherited"
+		inherit_id="survey.question_container">
+		<div t-field="question.description" position="replace">
+			<i t-if="not is_html_empty(question.description)"
+				class="fa fa-info-circle"
+				t-attf-onclick="$('#question_description_#{question.id}').toggleClass('d-none');" />
+			<div t-att-id="'question_description_%s' % question.id"
+				t-if="not is_html_empty(question.description)"
+				t-field='question.description'
+				t-att-class="'d-none question_description_%(question.id) text-muted oe_no_empty mt-1'" />
+
+		</div>
+	</template>
+
+	<template id="survey_fill_form_in_progress"
+		inherit_id="survey.survey_fill_form_in_progress">
+
+		<xpath
+			expr="//button[@type='submit'][1]//t[@t-if='not survey_last']"
+			position="replace">
+			<t t-if="not survey_last">Save and Continue</t>
+		</xpath>
+		<xpath
+			expr="//div[2]//t[@t-else='']//button[@type='submit']//t[@t-else='']"
+			position="replace">
+			<t t-else="">Save and Continue</t>
+
+		</xpath>
+	</template>
+
+
+
+	<template id="survey_fill_form_done"
+		inherit_id="survey.survey_fill_form_done">
+		<xpath expr="//t[@t-esc='answer.scoring_percentage']/.."
+			position="replace">
+			<div>
+				Score
+				<t t-esc="answer.scoring_percentage" />
+				%
+			</div>
+		</xpath>
+
+		<xpath expr="//t[@t-call='survey.survey_button_retake']"
+			position="replace" />
+
+		<xpath expr="//t[@t-else='']" position="replace" />
+	</template>
+
+	<template id="survey_fill_header"
+		inherit_id="survey.survey_fill_header">
+		<xpath expr="//h1[@t-esc='survey.title']" position="attributes">
+			<attribute name="t-if"></attribute>
+		</xpath>
+		<xpath expr="//h1[@t-esc='survey.title']" position="after">
+			<h3 t-if="answer.lp_employee_survey_id">
+				<span
+					t-esc="answer.lp_employee_survey_id.appraisal_id.employee_id.name"
+					class="o_survey_main_title pt-4 mb64" />
+				<span
+					t-if="answer.lp_employee_survey_id.appraisal_id.lp_job_id.name"
+					t-esc="' - ' + answer.lp_employee_survey_id.appraisal_id.lp_job_id.name" />
+				<span
+					t-if="answer.lp_employee_survey_id.appraisal_id.lp_current_job_level_id"
+					t-esc="', ' + answer.lp_employee_survey_id.appraisal_id.lp_current_job_level_id.x_name" />
+
+			</h3>
+		</xpath>
+	</template>
+
+</odoo>

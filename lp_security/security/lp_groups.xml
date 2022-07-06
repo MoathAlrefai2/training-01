@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+	<record id="base.group_public" model="res.groups">
+		<field name="show_group">1</field>
+	</record>
+
+	<record id="base.group_portal" model="res.groups">
+		<field name="show_group">1</field>
+	</record>
+
+	<record id="base.group_public" model="res.groups">
+		<field name="show_group">1</field>
+	</record>
+
+	<record id="sales_team.group_sale_salesman" model="res.groups">
+		<field name="implied_ids"
+			eval="[(3, ref('sale_subscription.group_sale_subscription_view'))]" />
+	</record>
+
+
+	<record id="lp_group_access_not_private_contact"
+		model="res.groups">
+		<field name="name">Access Others' Contact</field>
+		<field name="users" eval="[(4, ref('base.user_admin'))]" />
+		<field name="implied_ids"
+			eval="[(4,ref('base.group_partner_manager'))]" />
+		<field name="show_group">1</field>
+	</record>
+
+	<record id="base.group_private_addresses" model="res.groups">
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[(4,ref('base.group_partner_manager'))]" />
+
+	</record>
+
+
+	<record id="lp_group_access_menu" model="res.groups">
+		<field name="name">Access Basic Menus</field>
+		<field name="users" eval="[(4, ref('base.user_admin'))]" />
+		<field name="show_group">1</field>
+	</record>
+
+	<!-- Accounting -->
+	<record id="marketing_officer" model="res.groups">
+		<field name="name">Marketing Officer</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4, ref('base.group_user')),
+			]" />
+	</record>
+
+	<record id="crm_manager" model="res.groups">
+		<field name="name">CRM Manager</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4, ref('base.group_user')),
+			]" />
+	</record>
+
+
+	<record id="director_group" model="res.groups">
+		<field name="name">Director</field>
+		<field name="show_group">1</field>
+		<field name="users" eval="[(4,ref('base.user_admin'))]"></field>
+		<field name="implied_ids"
+			eval="[(4, ref('lp_security.lp_group_access_menu')),
+			(4, ref('hr_contract.group_hr_contract_manager')),
+			(4, ref('base.group_allow_export')),
+			(4, ref('hr_attendance.group_hr_attendance_manager')),
+			  (4, ref('sale_subscription.group_sale_subscription_manager')),
+			(4,ref('loan.loan_officer')),
+			(4, ref('purchase.group_purchase_manager')),
+			(4, ref('base.group_system')),
+			(4,ref('survey.group_survey_manager')),
+			(4,ref('hr_appraisal.group_hr_appraisal_manager')),
+			(4,ref('project.group_project_manager')),
+			(4, ref('hr.group_hr_manager')),
+			(4, ref('helpdesk.group_helpdesk_manager')),
+			(4, ref('sales_team.group_sale_manager')),
+			(4, ref('hr_timesheet.group_timesheet_manager')),
+			(4, ref('hr_payroll.group_hr_payroll_manager')),
+			(4, ref('account.group_account_manager')),
+			(4, ref('base.group_partner_manager')),
+			(4, ref('lp_hr.group_hr_asset_management')),
+			 (4,ref('hr_expense.group_hr_expense_manager')),
+			 (4,ref('hr_holidays.group_hr_holidays_manager')),
+			  (4,ref('Travel.trip_manager')),
+			    (4,ref('Travel.trip_officer')),
+			     (4,ref('awarded.awarded_officer')),
+			]" />
+
+	</record>
+
+
+	<record id="cheif_accountant_group" model="res.groups">
+		<field name="name">Chief Accountant</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[
+				   (4, ref('account.group_account_manager')),
+				   (4,ref('hr_expense.group_hr_expense_manager')),
+				   (4,ref('hr_payroll.group_hr_payroll_manager')),
+				   (4,ref('loan.loan_officer')),
+				    (4,ref('awarded.awarded_officer')),
+			]" />
+	</record>
+	<record id="accounting_officer_group" model="res.groups">
+		<field name="name">Accounting Officer</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ (4, ref('account.group_account_manager')),
+				    (4,ref('hr_expense.group_hr_expense_manager')),
+					(4,ref('hr_payroll.group_hr_payroll_manager')),
+					(4,ref('awarded.awarded_officer')),
+					(4,ref('loan.loan_officer')),]" />
+	</record>
+	<!-- Time Sheet -->
+	<record id="hr_manager" model="res.groups">
+		<field name="name">HR Manager</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ (4, ref('hr_contract.group_hr_contract_manager')),
+					(4, ref('hr.group_hr_manager')),
+					(4,ref('survey.group_survey_manager')),
+					(4,ref('hr_appraisal.group_hr_appraisal_manager')),
+					(4,ref('hr_expense.group_hr_expense_manager')),
+					(4,ref('hr_holidays.group_hr_holidays_manager')),
+					(4,ref('loan.loan_officer')),
+					(4,ref('Travel.trip_manager')),
+					(4,ref('Travel.trip_officer')),
+					(4,ref('awarded.awarded_officer')),
+					(4,ref('hr_timesheet.group_timesheet_manager')),
+					(4, ref('lp_hr.group_hr_asset_management'))]" />
+	</record>
+	<record id="lp_hr.group_hr_asset_management" model="res.groups">
+		<field name="show_group">1</field>
+	</record>
+
+
+	<record id="hr_senior_officer" model="res.groups">
+		<field name="name">HR Senior Officer</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+			 (4, ref('hr_contract.group_hr_contract_manager')),
+			(4, ref('hr.group_hr_user')),
+			(4,ref('survey.group_survey_manager')),
+			(4,ref('hr_expense.group_hr_expense_manager')),
+			(4,ref('hr_holidays.group_hr_holidays_manager')),
+			(4,ref('loan.loan_officer')),
+			(4,ref('Travel.trip_officer')),
+			(4,ref('Travel.trip_manager')),
+			(4,ref('awarded.awarded_officer')),
+			(4,ref('hr_timesheet.group_timesheet_manager')),
+			]" />
+	</record>
+
+	<record id="hr_officer" model="res.groups">
+		<field name="name">HR Officer</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4,ref('hr.group_hr_user')),
+				    (4,ref('hr_timesheet.group_timesheet_manager')),
+			]" />
+	</record>
+
+	<!-- Project -->
+
+	<record id="lp_crm.lp_group_crm_project_manager"
+		model="res.groups">
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[(4,ref('project.group_project_user')),
+			 (4, ref('hr_timesheet.group_hr_timesheet_approver')),
+			    (4, ref('sales_team.group_sale_salesman')),
+			]" />
+	</record>
+
+
+	<record id="department_head_group" model="res.groups">
+		<field name="name">Department Head</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[  
+				  (4, ref('project.group_project_user')),
+				  (4, ref('sales_team.group_sale_salesman')),
+				   (4, ref('hr_timesheet.group_hr_timesheet_approver')),
+				   (4, ref('account.group_account_invoice')),
+				   
+			]" />
+	</record>
+
+	<record id="section_head_group" model="res.groups">
+		<field name="name">Section Head</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4, ref('project.group_project_user')),
+				     (4, ref('hr_timesheet.group_hr_timesheet_approver')),
+			]" />
+	</record>
+
+	<!-- Sales -->
+	<record id="lp_group_sales_dept_head" model="res.groups">
+		<field name="name">Sales &amp; Marketing Department Head</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4, ref('sales_team.group_sale_manager')),
+				  (4, ref('sale_subscription.group_sale_subscription_manager')),
+			]" />
+	</record>
+
+	<record id="lp_group_sales_manager" model="res.groups">
+		<field name="name">Sales Manager</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4, ref('sales_team.group_sale_salesman')),
+				    (4, ref('sale_subscription.group_sale_subscription_manager')),
+			]" />
+	</record>
+
+
+	<!-- Support -->
+
+	<record id="lp_group_support_manager" model="res.groups">
+		<field name="name">Support Manager / Supervisor</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4, ref('helpdesk.group_helpdesk_manager')),
+			]" />
+	</record>
+
+	<record id="lp_group_support_eng" model="res.groups">
+		<field name="name">Support Engineer</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids"
+			eval="[ 
+				  (4, ref('helpdesk.group_helpdesk_user'))]" />
+	</record>
+
+
+	<record id="lp_group_website_admin" model="res.groups">
+		<field name="name">Website Admin</field>
+		<field name="show_group">1</field>
+		<field name="implied_ids" eval="[(4, ref('website.group_website_designer')),(4, ref('base.group_user'))]" />
+	</record>
+
+
+
+	<record id="lp_group_website_editor" model="res.groups">
+		<field name="name">Website Editor </field>
+		<field name="show_group">1</field>
+		<field name="implied_ids" eval="[(4, ref('website.group_website_designer')),(4, ref('base.group_user'))]" />
+	</record>
+
+
+
+
+	<record id="lp_group_employee" model="res.groups">
+		<field name="name">Employee</field>
+		<field name="implied_ids"
+			eval="[(4, ref('base.group_user')),(4, ref('hr_timesheet.group_hr_timesheet_user'))]" />
+		<field name="show_group">1</field>
+	</record>
+
+
+	<record id="hr_payroll.group_hr_payroll_manager"
+		model="res.groups">
+		<field name="implied_ids"
+			eval="[(3, ref('hr_holidays.group_hr_holidays_manager'))]" />
+	</record>
+
+	<record id="hr_payroll.group_hr_payroll_user" model="res.groups">
+		<field name="implied_ids"
+			eval="[(3, ref('hr_holidays.group_hr_holidays_user'))]" />
+	</record>
+
+
+
+	<!-- <record id="lp_technical_support" model="res.groups"> <field name="name">Technical 
+		Support(Access Detailed Groups)</field> <field name="users" eval="[(4, ref('base.user_admin'))]" 
+		/> </record> -->
+</odoo>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="appraisal_survey_tree">
+		<field name="name">Appraisal Survey Template</field>
+		<field name="model">appraisal.survey.template</field>
+		<field name="arch" type="xml">
+			<tree string="Appraisal Survey Template">
+			<field name="lp_name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_appraisal_survey_form" model="ir.ui.view">
+		<field name="name">Appraisal Survey Template</field>
+		<field name="model">appraisal.survey.template</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+
+					<group>
+						<group>
+							<field name="lp_name" />
+						</group>
+					</group>
+					<notebook>
+
+						<page string="Possible Suggested Answers">
+							<group>
+								<group>
+									<field name="lp_possible_suggested_answer_ids"
+										nolabel="1">
+										<tree editable="bottom">
+											<field name="sequence" widget="handle" />
+											<field name="value" />
+											<field name="answer_score" string="Score" />
+										</tree>
+									</field>
+								</group>
+							</group>
+						</page>
+						<page string="Behavioral Competencies">
+							<group>
+								<field name="lp_behavioral_competencies_weight"
+									string="Weight%" />
+							</group>
+							<field widget="question_page_one2many"
+								context="{'appraisal_question':True,'field':'lp_behavioral_company_id'}"
+								name="lp_behavioral_competencies_question_ids" nolabel="1">
+								<tree decoration-bf="is_page" editable="bottom">
+									<field name="sequence" widget="handle" />
+									<field name="title" widget="survey_description_page" />
+									<field name="is_page" invisible="1" />
+									<control>
+										<create name="add_question_control"
+											string="Add a question" />
+									</control>
+								</tree>
+							</field>
+						</page>
+						<page string="Previous Goals">
+							<group>
+								<field name="lp_previous_goals_weight" string="Weight%" />
+							</group>
+							<field widget="question_page_one2many"
+								context="{'appraisal_question':True,'field':'lp_previous_goals_compny_id'}"
+								name="lp_previous_goals_question_ids" nolabel="1">
+								<tree decoration-bf="is_page" editable="bottom">
+									<field name="sequence" widget="handle" />
+									<field name="title" widget="survey_description_page" />
+									<field name="is_page" invisible="1" />
+									<control>
+										<create name="add_question_control"
+											string="Add a question" />
+									</control>
+								</tree>
+							</field>
+						</page>
+						<page string="Feedback">
+							<field widget="question_page_one2many"
+								name="lp_feedback_question_ids" nolabel="1">
+								<tree decoration-bf="is_page" editable="bottom">
+									<field name="sequence" widget="handle" />
+									<field name="title" widget="survey_description_page" />
+									<field name="is_page" invisible="1" />
+									<control>
+										<create name="add_question_control"
+											string="Add a question" />
+									</control>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</sheet>
+
+			</form>
+		</field>
+	</record>
+
+	<record id="appraisal_survey_action"
+		model="ir.actions.act_window">
+		<field name="name">Appraisal Survey Template</field>
+		<field name="res_model">appraisal.survey.template</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem name="Appraisal Survey Template"
+		id="appraisal_survey_menu"
+		parent="hr.menu_human_resources_configuration"
+		action="appraisal_survey_action" sequence="11" />
+
+</odoo>

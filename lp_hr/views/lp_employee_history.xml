@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+      <record id="action_employee_history" model="ir.actions.act_window">
+        <field name="name">Employee History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee.history</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+        <record model="ir.ui.view" id="employee_department_history_form">
+            <field name="name">Employee_History.form</field>
+            <field name="model">employee.history</field>
+            <field name="arch" type="xml">
+        <form>
+          <sheet>
+              <div>
+                   <group>
+                     <field name="lp_previous_company" required="1" />
+  <field name="employee_id" string="Employee" required="1"/>
+                    <field name="lp_join_date"  />
+                    <field name ="lp_expertised"/>
+                            </group>
+                            <group>
+                    <field name="lp_end_date"/>
+                    <field name="lp_Reason_left"/>
+                    <field name="lp_salary"/>
+                    <field name="lp_experience"/>
+                            </group>
+              </div>
+          </sheet>
+        </form>
+
+            </field>
+        </record>
+
+                <record model="ir.ui.view" id="employee_department_history_tree">
+            <field name="name">Employee_History.tree</field>
+            <field name="model">employee.history</field>
+            <field name="arch" type="xml">
+        <tree>
+                    <field name="lp_previous_company" />
+                    <field name="employee_id" string="Employee"/>
+                    <field name="lp_join_date"  />
+                    <field name ="lp_expertised"/>
+                    <field name="lp_end_date"/>
+                    <field name="lp_Reason_left"/>
+                    <field name="lp_salary"/>
+                    <field name="lp_experience"/>
+        </tree>
+            </field>
+        </record>
+
+         <menuitem id="hr.employee_history" name="Employee History" action="action_employee_history" parent="hr.menu_human_resources_configuration" sequence="9"/>
+          </data>
+</odoo>
